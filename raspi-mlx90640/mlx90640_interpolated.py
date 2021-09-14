@@ -35,6 +35,7 @@ def plot_update():
     fig.canvas.restore_region(ax_background) # restore background
     mlx.getFrame(frame) # read mlx90640
     data_array = np.fliplr(np.reshape(frame,mlx_shape)) # reshape, flip data
+    data_array[23][31] = 25 # error pixel fix with constant value
     data_array = ndimage.zoom(data_array,mlx_interp_val) # interpolate
     therm1.set_array(data_array) # set data
     therm1.set_clim(vmin=np.min(data_array),vmax=np.max(data_array)) # set bounds
