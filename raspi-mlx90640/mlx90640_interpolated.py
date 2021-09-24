@@ -38,6 +38,7 @@ def plot_update():
     mlx.getFrame(frame)  # read mlx90640
     data_array = np.fliplr(np.reshape(frame, mlx_shape))  # reshape, flip data
     data_array[23][31] = (data_array[22][31] + data_array[23][30] + data_array[22][30])/3  # error pixel fix with constant value before interpolation
+    print(data_array[23][31],data_array[22][31], data_array[23][30], data_array[22][30])
     data_array = ndimage.zoom(data_array, mlx_interp_val)  # interpolate
     '''
     data_array[][]  # fix the error pixel with using an average value of the pixel nearby after interpolation
