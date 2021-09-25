@@ -3,7 +3,9 @@
 # -- 2fps with Interpolation and Blitting
 ##########################################
 #
-import time, board, busio
+import time
+import board
+import busio
 import numpy as np
 import adafruit_mlx90640
 import matplotlib.pyplot as plt
@@ -37,12 +39,10 @@ def plot_update():
     fig.canvas.restore_region(ax_background)  # restore background
     mlx.getFrame(frame)  # read mlx90640
     data_array = np.fliplr(np.reshape(frame, mlx_shape))  # reshape, flip data
-    data_array[23][31] = (data_array[22][31] + data_array[23][30] + data_array[22][30])/3  # error pixel fix with constant value before interpolation
-    print(data_array[23][31],data_array[22][31], data_array[23][30], data_array[22][30])
+    data_array[23][31] = (data_array[22][31] + data_array[23][30] + data_array[22][30])/3  # fix error pixel before
+    print(data_array[23][31], data_array[22][31], data_array[23][30], data_array[22][30])  # find the average value
     data_array = ndimage.zoom(data_array, mlx_interp_val)  # interpolate
-    '''
-    data_array[][]  # fix the error pixel with using an average value of the pixel nearby after interpolation
-    '''
+    # data_array[][]  # fix the error pixel with using an average value of the pixel nearby after interpolation
     therm1.set_array(data_array)  # set data
     therm1.set_clim(vmin=np.min(data_array), vmax=np.max(data_array))  # set bounds
     cbar.on_mappable_changed(therm1)  # update colorbar range
