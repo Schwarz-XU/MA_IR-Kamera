@@ -3,7 +3,7 @@ import paho.mqtt.client as mqtt
 
 def on_connect(client, userdata, flags, rc):
     if rc == 0:
-        print("Connected sucess")
+        print("Connected success")
     else:
         print(f"Connected fail with code {rc}")
 
