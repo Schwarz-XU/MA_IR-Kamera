@@ -1,6 +1,6 @@
 import paho.mqtt.client as mqtt
 import time
-import mlx90640
+from TemperaturMeasurment import mlx90640
 
 
 def on_connect(client, userdata, flags, rc):
