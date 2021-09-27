@@ -1,2 +1,3 @@
-def test(testvalue):
-    return testvalue
+def test(value):
+    data = int(value) * 2
+    return data
