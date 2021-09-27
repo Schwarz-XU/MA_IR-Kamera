@@ -7,6 +7,7 @@ def on_connect(client, userdata, flags, rc):
     print(f"Connected with result code {rc}")
 
 
+print("pub.py is running")
 client = mqtt.Client()
 client.on_connect = on_connect
 client.connect("broker.emqx.io", 1883, 60)
