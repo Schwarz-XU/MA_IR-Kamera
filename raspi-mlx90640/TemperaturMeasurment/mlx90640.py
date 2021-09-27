@@ -15,18 +15,17 @@ from scipy import ndimage
 i2c = busio.I2C(board.SCL, board.SDA, frequency=1000000)  # setup I2C
 mlx = adafruit_mlx90640.MLX90640(i2c)  # begin MLX90640 with I2C comm
 mlx.refresh_rate = adafruit_mlx90640.RefreshRate.REFRESH_16_HZ  # set refresh rate
+# mlx90640 build
 mlx_shape = (24, 32)  # mlx90640 shape
-
 mlx_interp_val = 10  # interpolate # on each dimension
 mlx_interp_shape = (mlx_shape[0] * mlx_interp_val,
                     mlx_shape[1] * mlx_interp_val)  # new shape
-
+# set plot
 fig = plt.figure(figsize=(12, 9))  # start figure
 ax = fig.add_subplot(111)  # add subplot
 fig.subplots_adjust(0.05, 0.05, 0.95, 0.95)  # get rid of unnecessary padding
 therm1 = ax.imshow(np.zeros(mlx_interp_shape), interpolation='none',
                    cmap=plt.cm.bwr, vmin=25, vmax=45)  # preemptive image
-
 # temperature scale
 cbar = fig.colorbar(therm1)  # setup colorbar
 cbar.set_label('Temperature [$^{\circ}$C]', fontsize=14)  # colorbar label
@@ -53,7 +52,7 @@ def plot_update():
     ax.draw_artist(therm1)  # draw new thermal image
     fig.canvas.blit(ax.bbox)  # draw background
     fig.canvas.flush_events()  # show the new image
-    return
+    return data_array
 
 
 t_array = []
