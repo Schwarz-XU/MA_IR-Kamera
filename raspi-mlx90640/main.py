@@ -1,4 +1,4 @@
-from TemperaturMeasurment import pub
+from TemperatureMeasurement import pub
 
 
 if __name__ == "main.py":
