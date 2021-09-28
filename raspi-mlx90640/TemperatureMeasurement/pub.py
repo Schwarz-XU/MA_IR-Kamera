@@ -5,10 +5,8 @@ import time
 from TemperatureMeasurement import test
 import sys, os
 
-sys.path.append(os.path.abspath("."))
-
 # add TemperatureMeasurement module path
-
+sys.path.append(os.path.abspath("."))
 
 
 def on_connect(client, userdata, flags, rc):
