@@ -10,10 +10,10 @@ import numpy as np
 import adafruit_mlx90640
 import matplotlib.pyplot as plt
 from scipy import ndimage
-from TemperatureMeasurement import pub
-#import pub
+import paho.mqtt.client as mqtt
+import time
 
-# build I2C bus
+# establish I2C bus
 i2c = busio.I2C(board.SCL, board.SDA, frequency=1000000)  # setup I2C
 mlx = adafruit_mlx90640.MLX90640(i2c)  # begin MLX90640 with I2C comm
 mlx.refresh_rate = adafruit_mlx90640.RefreshRate.REFRESH_16_HZ  # set refresh rate
@@ -58,11 +58,26 @@ def plot_update():
 
 
 t_array = []
+
+
+def on_connect(client, userdata, flags, rc):
+    print(f"Connected with result code {rc}")
+
+
 while True:
     t1 = time.monotonic()  # for determining frame rate
     try:
         plot_update()  # update plot
-        pub.publish(plot_update())
+        # establish connection
+        print("pub.py is running")
+        client = mqtt.Client()
+        client.on_connect = on_connect
+        client.connect("broker.emqx.io", 1883, 60)
+
+        client.publish('raspberry/temperature_array', payload=data[0], qos=0, retain=False)
+        print(f"send {data[0]} data to raspberry/temperature_array")
+        time.sleep(2)
+        client.loop_forever()
     except:
         continue
     # approximating frame rate
