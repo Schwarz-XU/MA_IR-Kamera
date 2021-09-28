@@ -61,12 +61,7 @@ while True:
     t1 = time.monotonic()  # for determining frame rate
     try:
         plot_update()  # update plot
-        data_array = plot_update()
         pub()
-        pub.client.publish('raspberry/temperature_array', payload=data_array[0], qos=0, retain=False)
-        print(f"send {data_array[0]} data to raspberry/temperature_array")
-        time.sleep(2)
-        pub.client.loop_forever()
     except:
         continue
     # approximating frame rate
