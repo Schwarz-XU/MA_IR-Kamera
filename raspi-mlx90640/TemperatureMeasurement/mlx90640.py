@@ -11,6 +11,7 @@ import adafruit_mlx90640
 import matplotlib.pyplot as plt
 from scipy import ndimage
 from TemperatureMeasurement import pub
+#import pub
 
 # build I2C bus
 i2c = busio.I2C(board.SCL, board.SDA, frequency=1000000)  # setup I2C
@@ -61,7 +62,7 @@ while True:
     t1 = time.monotonic()  # for determining frame rate
     try:
         plot_update()  # update plot
-        pub()
+        pub.pub.publish(plot_update())
     except:
         continue
     # approximating frame rate
