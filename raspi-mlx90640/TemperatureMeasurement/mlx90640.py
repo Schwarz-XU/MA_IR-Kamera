@@ -62,7 +62,7 @@ while True:
     t1 = time.monotonic()  # for determining frame rate
     try:
         plot_update()  # update plot
-        pub.pub.publish(plot_update())
+        pub.publish(plot_update())
     except:
         continue
     # approximating frame rate
