@@ -12,6 +12,8 @@ import matplotlib.pyplot as plt
 from scipy import ndimage
 import paho.mqtt.client as mqtt
 import time
+from TemperatureMeasurement import pub
+
 
 # establish I2C bus
 i2c = busio.I2C(board.SCL, board.SDA, frequency=1000000)  # setup I2C
@@ -75,10 +77,7 @@ while True:
     try:
         plot_update()  # update plot
         data = plot_update()
-        client.publish('raspberry/temperature_array', payload=data[0][0], qos=0, retain=False)
-        print(f"send {data[0][0]} data to raspberry/temperature_array")
-        time.sleep(2)
-        # client.loop_forever()
+        publisher = pub.publisher().publish(data)
     except:
         continue
     # approximating frame rate
