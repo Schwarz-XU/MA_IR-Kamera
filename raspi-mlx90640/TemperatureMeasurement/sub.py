@@ -1,4 +1,4 @@
-# subscriber.py
+# sub.py
 import paho.mqtt.client as mqtt
 
 
