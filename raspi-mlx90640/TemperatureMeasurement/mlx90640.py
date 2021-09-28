@@ -68,6 +68,7 @@ while True:
     t1 = time.monotonic()  # for determining frame rate
     try:
         plot_update()  # update plot
+        data = plot_update()
         # establish connection
         print("pub.py is running")
         client = mqtt.Client()
