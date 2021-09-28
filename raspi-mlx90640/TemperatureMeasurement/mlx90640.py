@@ -77,7 +77,9 @@ while True:
     try:
         plot_update()  # update plot
         data = plot_update()
-        publisher = pub.publisher().publish(data)
+        print(data)
+        publisher = pub.publisher()
+        publisher.publish(data)
     except:
         continue
     # approximating frame rate
