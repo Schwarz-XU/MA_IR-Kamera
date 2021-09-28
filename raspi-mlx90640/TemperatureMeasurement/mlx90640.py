@@ -75,9 +75,9 @@ while True:
     try:
         plot_update()  # update plot
         data = plot_update()
-        print(data)
         client.publish('raspberry/temperature_array', payload=data[0][0], qos=0, retain=False)
         print(f"send {data[0][0]} data to raspberry/temperature_array")
+        time.sleep(2)
         # client.loop_forever()
     except:
         continue
