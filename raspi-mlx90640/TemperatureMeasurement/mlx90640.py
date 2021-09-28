@@ -75,8 +75,6 @@ while True:
         plot_update()  # update plot
         data = plot_update()
         print(data)
-        publisher = pub.publisher()
-        publisher.publish(data)
         client.publish('raspberry/temperature_array', payload=data[0][0], qos=0, retain=False)
         print(f"send {data[0][0]} data to raspberry/temperature_array")
     except:
