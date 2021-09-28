@@ -18,8 +18,9 @@ client = mqtt.Client()
 client.on_connect = on_connect
 client.connect("broker.emqx.io", 1883, 60)
 
-client.publish('raspberry/temperature_array', payload=mlx90640.plot_update()[0], qos=0, retain=False)
-print(f"send {mlx90640.plot_update()[0]} data to raspberry/temperature_array")
+data = mlx90640.plot_update()
+client.publish('raspberry/temperature_array', payload=data[0], qos=0, retain=False)
+print(f"send {data[0]} data to raspberry/temperature_array")
 time.sleep(2)        
 client.loop_forever()
 
