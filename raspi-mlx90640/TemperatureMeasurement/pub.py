@@ -2,6 +2,12 @@ import paho.mqtt.client as mqtt
 import time
 from TemperatureMeasurement import mlx90640
 from TemperatureMeasurement import test
+import sys, os
+
+sys.path.append(os.path.abspath("."))
+
+# add TemperatureMeasurement module path
+
 
 def on_connect(client, userdata, flags, rc):
     print(f"Connected with result code {rc}")
