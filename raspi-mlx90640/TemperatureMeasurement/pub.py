@@ -17,12 +17,5 @@ class publisher:
         client.publish('raspberry/temperature_array', payload=data[0][0], qos=0, retain=False)
         print(f"send {data[0][0]} data to raspberry/temperature_array")
         time.sleep(2)
-        client.loop_forever()
+        # client.loop_forever()
 
-# while True:
-#     data = mlx90640.plot_update()
-#     # data = [0, 1]
-#     client.publish('raspberry/temperature_array', payload=data[0], qos=0, retain=False)
-#     print(f"send {data} data to raspberry/temperature_array")
-#
-#     time.sleep(2)
