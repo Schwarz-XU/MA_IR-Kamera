@@ -1,4 +1,4 @@
-# __all__ = ["pub", "mlx90640"]
+# __all__ = ["pub", "mlx90640", "sub"]
 
 # import sys, os
 # from TemperatureMeasurement import mlx90640

@@ -10,6 +10,7 @@ import numpy as np
 import adafruit_mlx90640
 import matplotlib.pyplot as plt
 from scipy import ndimage
+from TemperatureMeasurement import pub
 
 # build I2C bus
 i2c = busio.I2C(board.SCL, board.SDA, frequency=1000000)  # setup I2C
@@ -60,6 +61,12 @@ while True:
     t1 = time.monotonic()  # for determining frame rate
     try:
         plot_update()  # update plot
+        data_array = plot_update()
+        pub()
+        pub.client.publish('raspberry/temperature_array', payload=data_array[0], qos=0, retain=False)
+        print(f"send {data_array[0]} data to raspberry/temperature_array")
+        time.sleep(2)
+        pub.client.loop_forever()
     except:
         continue
     # approximating frame rate
