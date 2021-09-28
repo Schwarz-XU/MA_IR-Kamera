@@ -1,7 +1,7 @@
 # pub.py
 import paho.mqtt.client as mqtt
 import time
-# from TemperatureMeasurement import mlx90640
+from TemperatureMeasurement import mlx90640
 # from TemperatureMeasurement import test
 import sys, os
 
@@ -19,8 +19,7 @@ client.on_connect = on_connect
 client.connect("broker.emqx.io", 1883, 60)
 
 while True:
-    # data = mlx90640.plot_update()
-    data = [0, 1]
+    data = mlx90640.plot_update()
     client.publish('raspberry/temperature_array', payload=data[0], qos=0, retain=False)
     print(f"send {data} data to raspberry/temperature_array")
 
