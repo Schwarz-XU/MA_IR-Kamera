@@ -1,8 +1,6 @@
-__all__ = ["pub", "mlx90640"]
+# __all__ = ["pub", "mlx90640"]
 
-import sys, os
+# import sys, os
 # from TemperatureMeasurement import mlx90640
 # from TemperatureMeasurement import pub
-from TemperatureMeasurement import test
-
-
+# from TemperatureMeasurement import test

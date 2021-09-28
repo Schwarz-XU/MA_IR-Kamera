@@ -2,12 +2,12 @@
 import paho.mqtt.client as mqtt
 import time
 from TemperatureMeasurement import mlx90640
-from TemperatureMeasurement import test
+# from TemperatureMeasurement import test
 import sys, os
 
 # add TemperatureMeasurement module path
 sys.path.append(os.path.abspath("."))
-
+# sys.path.append("/home/pi/MA_IR-Kamera/raspi-mlx90640")
 
 def on_connect(client, userdata, flags, rc):
     print(f"Connected with result code {rc}")
