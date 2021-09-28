@@ -1,6 +1,5 @@
 # test.py
 import random
-import time
 
 
 def test(value):
