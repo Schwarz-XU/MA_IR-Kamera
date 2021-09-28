@@ -18,4 +18,9 @@ class publisher:
         client.publish('raspberry/temperature_array', payload=data[0][0], qos=0, retain=False)
         print(f"send {data[0][0]} data to raspberry/temperature_array")
         time.sleep(2)
+<<<<<<< HEAD
         #client.loop_forever()
+=======
+        # client.loop_forever()
+
+>>>>>>> 82534152816af1706b5495552cfb6e7a02456a8f

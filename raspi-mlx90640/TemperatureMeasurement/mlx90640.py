@@ -3,7 +3,7 @@
 # -- 2fps with Interpolation and Blitting
 ##########################################
 #
-import time
+# import time
 import board
 import busio
 import numpy as np
@@ -12,7 +12,6 @@ import matplotlib.pyplot as plt
 from scipy import ndimage
 import paho.mqtt.client as mqtt
 import time
-from TemperatureMeasurement import pub
 
 
 # establish I2C bus
@@ -59,9 +58,6 @@ def plot_update():
     return data_array
 
 
-t_array = []
-
-
 def on_connect(client, userdata, flags, rc):
     print(f"Connected with result code {rc}")
 
@@ -72,14 +68,20 @@ client.on_connect = on_connect
 client.connect("broker.emqx.io", 1883, 60)
         
 
+t_array = []
 while True:
     t1 = time.monotonic()  # for determining frame rate
     try:
         plot_update()  # update plot
         data = plot_update()
+<<<<<<< HEAD
         print(data)
         publisher = pub.publisher()
         publisher.publish(data)
+=======
+        client.publish('raspberry/temperature_array', payload=data[0][0], qos=0, retain=False)
+        print(f"send {data[0][0]} data to raspberry/temperature_array")
+>>>>>>> 82534152816af1706b5495552cfb6e7a02456a8f
     except:
         continue
     # approximating frame rate
