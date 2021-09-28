@@ -1,3 +1,9 @@
+# test.py
+import random
+import time
+
+
 def test(value):
-    data = int(value) * 2
+    i = random.random()
+    data = [value, value + 2, value + i]
     return data
