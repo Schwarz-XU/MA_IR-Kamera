@@ -74,14 +74,11 @@ while True:
     try:
         plot_update()  # update plot
         data = plot_update()
-<<<<<<< HEAD
         print(data)
         publisher = pub.publisher()
         publisher.publish(data)
-=======
         client.publish('raspberry/temperature_array', payload=data[0][0], qos=0, retain=False)
         print(f"send {data[0][0]} data to raspberry/temperature_array")
->>>>>>> 82534152816af1706b5495552cfb6e7a02456a8f
     except:
         continue
     # approximating frame rate
