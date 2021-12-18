@@ -4,7 +4,7 @@ import paho.mqtt.client as mqtt
 
 def on_connect(client, userdata, flags, rc):
     print(f"Connected with result code {rc}")
-    client.subscribe("raspberry/topic")
+    client.subscribe("raspberry/temperature_array")
 
 
 def on_message(client, userdata, msg):
