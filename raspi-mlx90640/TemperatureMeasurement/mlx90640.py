@@ -7,10 +7,10 @@ import board
 import busio
 import time
 import adafruit_mlx90640
-from scipy import ndimage
 import numpy as np
 import matplotlib.pyplot as plt
 import paho.mqtt.client as mqtt
+from scipy import ndimage
 
 # establish I2C bus
 i2c = busio.I2C(board.SCL, board.SDA, frequency=1000000)  # setup I2C
@@ -22,6 +22,8 @@ mlx_interp_val = 10  # interpolate (on each dimension)
 # mlx_interp_val = 1  # no interpolation
 mlx_interp_shape = (mlx_shape[0] * mlx_interp_val,
                     mlx_shape[1] * mlx_interp_val)  # new shape
+
+
 # set plot
 fig = plt.figure(figsize=(12, 9))  # start figure
 ax = fig.add_subplot(111)  # add subplot
@@ -49,7 +51,8 @@ def plot_update():
     data_array_raw = ndimage.zoom(data_array_raw, mlx_interp_val)  # interpolate
     therm1.set_array(data_array_raw)  # set data
     therm1.set_clim(vmin=np.min(data_array_raw), vmax=np.max(data_array_raw))  # set bounds
-    cbar.on_mappable_changed(therm1)  # update colorbar range
+    cbar.on_mappable_changed(therm1)  # old version of function
+    # cbar.update_normal(therm1) # update colorbar range (new version)
 
     ax.draw_artist(therm1)  # draw new thermal image
     fig.canvas.blit(ax.bbox)  # draw background
@@ -57,9 +60,21 @@ def plot_update():
     return data_array_raw
 
 
+'''
+# TODO: try to not show die figure to improve the programm efficiency
+frame = np.zeros(mlx_shape[0] * mlx_shape[1])  # 768 pts
+data_array_raw = np.fliplr(np.reshape(frame, mlx_shape))  # reshape, flip data
+data_array_raw[23][31] = (data_array_raw[22][31]
+                            + data_array_raw[23][30]
+                            + data_array_raw[22][30]) / 3  # fix error pixel before
+data_array_raw = ndimage.zoom(data_array_raw, mlx_interp_val)  # interpolate
+print(data_array_raw)
+'''
+
+
 def on_connect(client, userdata, flags, rc):
     print(f"Connected with result code {rc}")
-
+    
 
 # establish connection
 client = mqtt.Client()
@@ -72,17 +87,21 @@ while True:
     try:
         plot_update()  # update plot
         data_array_raw = plot_update()
+        # print(data_array_raw)
 
         # client.publish('raspberry/temperature_array', payload='%.2f'%data_array[0][0], qos=0, retain=False)
         # print(f"send {'%.2f'%data_array[0][0]} to raspberry/temperature_array")
-
+        
+        # send all data_array to the broker
         data_array_str = np.array2string(data_array_raw)
         client.publish('raspberry/temperature_array', payload=data_array_str, qos=0, retain=False)
         print(f"send {data_array_str} to raspberry/temperature_array")
     except:
         continue
+
     # approximating frame rate
     t_array.append(time.monotonic() - t1)
     if len(t_array) > 10:
         t_array = t_array[1:]  # recent times for frame rate approx
     print('Frame Rate: {0:2.1f}fps'.format(len(t_array) / np.sum(t_array)))
+    
