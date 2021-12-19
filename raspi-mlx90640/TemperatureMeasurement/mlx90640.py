@@ -51,8 +51,8 @@ def plot_update():
     data_array_raw = ndimage.zoom(data_array_raw, mlx_interp_val)  # interpolate
     therm1.set_array(data_array_raw)  # set data
     therm1.set_clim(vmin=np.min(data_array_raw), vmax=np.max(data_array_raw))  # set bounds
-    cbar.on_mappable_changed(therm1)  # old version of function
-    # cbar.update_normal(therm1) # update colorbar range (new version)
+    # cbar.on_mappable_changed(therm1)  # old version of function
+    cbar.update_normal(therm1) # update colorbar range (new version)
 
     ax.draw_artist(therm1)  # draw new thermal image
     fig.canvas.blit(ax.bbox)  # draw background
@@ -78,17 +78,19 @@ def on_connect(client, userdata, flags, rc):
 
 # establish connection
 client = mqtt.Client()
-client.username_pw_set("UEL-Rkl_Tm", password="123456")
+# client = mqtt.Client(client_id="mqttx_test")
+client.username_pw_set(username="UEl-Rkl_Tm", password="12345678") # TODO: not useable, need correction
 client.on_connect = on_connect
+client.will_set("raspberry/status", b'{"status": "off"}') # Set will to find the status of raspberry pi
 client.connect("broker.emqx.io", 1883, 60)  # TODO: free server right now, replace it with institute's server later
 
 t_array = []
+
 while True:
     t1 = time.monotonic()  # for determining frame rate
     try:
         plot_update()  # update plot
         data_array_raw = plot_update()
-        # print(data_array_raw)
 
         # client.publish('raspberry/temperature_array', payload='%.2f'%data_array[0][0], qos=0, retain=False)
         # print(f"send {'%.2f'%data_array[0][0]} to raspberry/temperature_array")
