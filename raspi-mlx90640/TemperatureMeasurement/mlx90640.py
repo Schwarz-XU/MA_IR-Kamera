@@ -18,7 +18,7 @@ mlx = adafruit_mlx90640.MLX90640(i2c)  # begin MLX90640 with I2C comm
 mlx.refresh_rate = adafruit_mlx90640.RefreshRate.REFRESH_16_HZ  # set refresh rate
 # mlx90640 build
 mlx_shape = (24, 32)  # mlx90640 shape
-mlx_interp_val = 10  # interpolate (on each dimension)
+mlx_interp_val = 1  # interpolate (on each dimension)
 # mlx_interp_val = 1  # no interpolation
 mlx_interp_shape = (mlx_shape[0] * mlx_interp_val,
                     mlx_shape[1] * mlx_interp_val)  # new shape
@@ -36,7 +36,7 @@ cbar.set_label('Temperature [$^{\circ}$C]', fontsize=14)  # colorbar label
 
 fig.canvas.draw()  # draw figure to copy background
 ax_background = fig.canvas.copy_from_bbox(ax.bbox)  # copy background
-fig.show()  # show the figure before blitting
+# fig.show()  # show the figure before blitting
 
 frame = np.zeros(mlx_shape[0] * mlx_shape[1])  # 768 pts
 
@@ -81,7 +81,7 @@ client = mqtt.Client()
 # client = mqtt.Client(client_id="mqttx_test")
 client.username_pw_set(username="UEl-Rkl_Tm", password="12345678") # TODO: not useable, need correction
 client.on_connect = on_connect
-client.will_set("raspberry/status", b'{"status": "off"}') # Set will to find the status of raspberry pi
+client.will_set("raspberry/pub/status", b'{"status": "off"}') # Set will to find the status of raspberry pi
 client.connect("broker.emqx.io", 1883, 60)  # TODO: free server right now, replace it with institute's server later
 
 t_array = []
@@ -92,11 +92,11 @@ while True:
         plot_update()  # update plot
         data_array_raw = plot_update()
 
-        # client.publish('raspberry/temperature_array', payload='%.2f'%data_array[0][0], qos=0, retain=False)
+        # client.publish('raspberry/temperature_array', payload='%.2f'%data_array_raw[0][0], qos=0, retain=False)
         # print(f"send {'%.2f'%data_array[0][0]} to raspberry/temperature_array")
         
         # send all data_array to the broker
-        data_array_str = np.array2string(data_array_raw)
+        data_array_str = np.array2string(data_array_raw, precision=2, separator=",", formatter={'float_kind':lambda x: "%.2f"% x}) # formatter={'float_kind':lambda x: "%.2f"% x}
         client.publish('raspberry/temperature_array', payload=data_array_str, qos=0, retain=False)
         print(f"send {data_array_str} to raspberry/temperature_array")
     except:
