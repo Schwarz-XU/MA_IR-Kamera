@@ -60,8 +60,8 @@ def plot_update():
     return data_array_raw
 
 
+# TODO: try to not show die figure to improve the program efficiency
 '''
-# TODO: try to not show die figure to improve the programm efficiency
 frame = np.zeros(mlx_shape[0] * mlx_shape[1])  # 768 pts
 data_array_raw = np.fliplr(np.reshape(frame, mlx_shape))  # reshape, flip data
 data_array_raw[23][31] = (data_array_raw[22][31]
@@ -78,8 +78,9 @@ def on_connect(client, userdata, flags, rc):
 
 # establish connection
 client = mqtt.Client()
+client.username_pw_set("UEL-Rkl_Tm", password="123456")
 client.on_connect = on_connect
-client.connect("broker.emqx.io", 1883, 60)  # TODO: using free server, should be replaced with institute's server later
+client.connect("broker.emqx.io", 1883, 60)  # TODO: free server right now, replace it with institute's server later
 
 t_array = []
 while True:
