@@ -79,7 +79,7 @@ def on_connect(client, userdata, flags, rc):
 # establish connection
 client = mqtt.Client()
 # client = mqtt.Client(client_id="mqttx_test")
-client.username_pw_set(username="UEl-Rkl_Tm", password="12345678") # TODO: not useable, need correction
+client.username_pw_set(username="UEl-Rkl_Tm", password="12345678")  # TODO: not usable, need correction
 client.on_connect = on_connect
 client.will_set("raspberry/pub/status", b'{"status": "off"}') # Set will to find the status of raspberry pi
 client.connect("broker.emqx.io", 1883, 60)  # TODO: free server right now, replace it with institute's server later
@@ -96,7 +96,7 @@ while True:
         # print(f"send {'%.2f'%data_array[0][0]} to raspberry/temperature_array")
         
         # send all data_array to the broker
-        data_array_str = np.array2string(data_array_raw, precision=2, separator=",", formatter={'float_kind':lambda x: "%.2f"% x}) # formatter={'float_kind':lambda x: "%.2f"% x}
+        data_array_str = np.array2string(data_array_raw, precision=2, separator=",", formatter={'float_kind':lambda x: "%.2f"% x})
         client.publish('raspberry/temperature_array', payload=data_array_str, qos=0, retain=False)
         print(f"send {data_array_str} to raspberry/temperature_array")
     except:
