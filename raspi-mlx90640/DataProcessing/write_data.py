@@ -31,7 +31,7 @@ def write_csv():
         # write the temperature data into a .csv file
         file_path = os.path.abspath("../DataProcessing")
         with open(file_path + "/Temperature_Data.csv", "a", newline="") as file:
-            writer = csv.writer(file, delimiter=' ', quotechar=' ')
+            writer = csv.writer(file, delimiter=',', quotechar=' ')
             reader = csv.reader(file)
             # get current date and time
             now = datetime.now()  # get current date and time
