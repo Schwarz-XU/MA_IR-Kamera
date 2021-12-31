@@ -1,5 +1,5 @@
 """
-# MLX90640 Thermal Camera w Raspberry Pi
+# MLX90640 Thermal Camera with Raspberry Pi
 # -- 2fps with Interpolation and Blitting
 """
 
@@ -18,8 +18,8 @@ mlx = adafruit_mlx90640.MLX90640(i2c)  # begin MLX90640 with I2C comm
 mlx.refresh_rate = adafruit_mlx90640.RefreshRate.REFRESH_16_HZ  # set refresh rate
 # mlx90640 build
 mlx_shape = (24, 32)  # mlx90640 shape
-mlx_interp_val = 1  # interpolate (on each dimension)
-# mlx_interp_val = 1  # no interpolation
+# mlx_interp_val = 10  # interpolate (on each dimension)
+mlx_interp_val = 1  # no interpolation
 mlx_interp_shape = (mlx_shape[0] * mlx_interp_val,
                     mlx_shape[1] * mlx_interp_val)  # new shape
 
@@ -47,7 +47,7 @@ def plot_update():
     data_array_raw = np.fliplr(np.reshape(frame, mlx_shape))  # reshape, flip data
     data_array_raw[23][31] = (data_array_raw[22][31]
                               + data_array_raw[23][30]
-                              + data_array_raw[22][30]) / 3  # fix error pixel before
+                              + data_array_raw[22][30]) / 3  # fix error pixel with the average value of nearst
     data_array_raw = ndimage.zoom(data_array_raw, mlx_interp_val)  # interpolate
     therm1.set_array(data_array_raw)  # set data
     therm1.set_clim(vmin=np.min(data_array_raw), vmax=np.max(data_array_raw))  # set bounds
@@ -92,9 +92,6 @@ while True:
         plot_update()  # update plot
         data_array_raw = plot_update()
 
-        # client.publish('raspberry/temperature_array', payload='%.2f'%data_array_raw[0][0], qos=0, retain=False)
-        # print(f"send {'%.2f'%data_array[0][0]} to raspberry/temperature_array")
-        
         # send all data_array to the broker
         data_array_str = np.array2string(data_array_raw, precision=2, separator=",", formatter={'float_kind':lambda x: "%.2f"% x})
         client.publish('raspberry/temperature_array', payload=data_array_str, qos=0, retain=False)
