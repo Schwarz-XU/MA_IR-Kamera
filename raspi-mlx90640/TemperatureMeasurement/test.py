@@ -8,15 +8,16 @@ def on_connect(client, userdata, flags, rc):
         print("Connected success")
     else:
         print(f"Connected fail with code {rc}")
-    client.subscribe("test/a")
+    client.subscribe("raspberry/temperature_array")
+    # client.subscribe("testtopic/#")
+
 
 def on_message(client, userdata, msg):
     print(f"{msg.topic} {msg.payload}")
         
         
 client = mqtt.Client()
-# client = mqtt.Client()
-client.username_pw_set(username="test_name", password= "12345678")
+# client.username_pw_set(username="test_name", password= "12345678")
 client.on_connect = on_connect
 client.on_message = on_message
 

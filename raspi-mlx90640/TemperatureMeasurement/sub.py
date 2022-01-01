@@ -3,7 +3,11 @@ import paho.mqtt.client as mqtt
 
 
 def on_connect(client, userdata, flags, rc):
-    print(f"Connected with result code {rc}")
+    if rc == 0:
+        print("Connected success")
+    else:
+        print(f"Connected fail with code {rc}")
+    # print(f"Connected with result code {rc}")
     client.subscribe("raspberry/temperature_array")  # sub the topic
 
 
@@ -25,3 +29,4 @@ def run_sub():
     client.connect('broker.emqx.io', 1883, 60)
     # start the loop
     client.loop_start()
+    # client.loop_forever()

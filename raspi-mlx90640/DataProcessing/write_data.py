@@ -2,13 +2,9 @@
 from TemperatureMeasurement import sub
 from datetime import datetime, date, time
 import numpy as np
-import pandas as pd
-import queue
 import time
-import sys
 import csv
 import os
-
 
 # initial the global var.
 payload = bytes()
@@ -26,8 +22,10 @@ def write_csv():
     if payload == bytes():
         pass  # if payload is empty, then pass
     else:
-        temperature_list = str(payload, encoding="utf-8").replace("\n", "").replace(" ", "").replace("[", "").replace("]", "").split(",")  # reform the temperature list
-        temperature_array = np.array(temperature_list).reshape((24, 32))  # convert the temperature list into a 24x32 array
+        temperature_list = str(payload, encoding="utf-8").replace("\n", "").replace(" ", "").replace("[", "").replace(
+            "]", "").split(",")  # reform the temperature list
+        temperature_array = np.array(temperature_list).reshape(
+            (24, 32))  # convert the temperature list into a 24x32 array
         # write the temperature data into a .csv file
         file_path = os.path.abspath("../Data")
         with open(file_path + "/Temperature_Data.csv", "a", newline="") as file:
@@ -69,10 +67,10 @@ def read_csv():
             print(row)
 
 
-def update_plot():
-    print(temperature_array)
-
-
 def run_write():
     write_csv()
     # read_csv()
+
+
+while True:
+    run_write()
