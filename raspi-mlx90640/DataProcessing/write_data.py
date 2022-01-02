@@ -26,6 +26,8 @@ def write_csv():
             "]", "").split(",")  # reform the temperature list
         temperature_array = np.array(temperature_list).reshape(
             (24, 32))  # convert the temperature list into a 24x32 array
+        print(temperature_list)
+        print(np.shape(temperature_array))
         # write the temperature data into a .csv file
         file_path = os.path.abspath("../Data")
         with open(file_path + "/Temperature_Data.csv", "a", newline="") as file:

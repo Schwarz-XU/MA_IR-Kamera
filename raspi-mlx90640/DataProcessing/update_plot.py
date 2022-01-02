@@ -1,16 +1,17 @@
 # update_plot.py
-from TemperatureMeasurement import sub
-from datetime import datetime, date, time
+from scipy import ndimage
 import numpy as np
 import matplotlib.pyplot as plt
-import pandas as pd
-import queue
-import time
 import sys
-import csv
 import os
-from scipy import ndimage
+sys.path.append(os.path.abspath("../"))
+from TemperatureMeasurement import sub
 
+
+temperature_array_shape = (24, 32)  # mlx90640 shape
+interp_val = 1  # no interpolation
+interp_shape = (temperature_array_shape[0] * interp_val,
+            temperature_array_shape[1] * interp_val)  # new shape
 
 # initial the global var.
 payload = bytes()
@@ -18,7 +19,7 @@ temperature_list = []
 temperature_array = np.array("")
 
 
-def write_csv():
+def access_data():
     # receive data from sub.py
     sub.run_sub()
     global payload
@@ -26,18 +27,12 @@ def write_csv():
     global temperature_array
     payload = sub.payload
     if payload == bytes():
-        pass  # if payload is empty, then pass
+        pass
     else:
         temperature_list = str(payload, encoding="utf-8").replace("\n", "").replace(" ", "").replace("[", "").replace(
             "]", "").split(",")  # reform the temperature list
         temperature_array = np.array(temperature_list).reshape(
             (24, 32))  # convert the temperature list into a 24x32 array
-
-
-temperature_array_shape = np.shape(temperature_array)  # mlx90640 shape
-interp_val = 1  # no interpolation
-interp_shape = (24 * interp_val,
-                32 * interp_val)  # new shape
 
 
 # set plot
@@ -56,29 +51,23 @@ fig_pc.show()  # show the figure before blitting
 
 frame = np.zeros(24 * 32)  # 768 pts
 
-print(type(temperature_array))
+
 def plot_update():
+    access_data()
     fig_pc.canvas.restore_region(ax_background)  # restore background
     temperature_array = np.fliplr(np.reshape(frame, (24, 32)))  # reshape, flip data
     temperature_array = ndimage.zoom(temperature_array, interp_val)
     therm1.set_array(temperature_array)  # set data
     therm1.set_clim(vmin=np.min(temperature_array), vmax=np.max(temperature_array))  # set bounds
-    cbar.update_normal(therm1) # update colorbar range (new version)
+    cbar.update_normal(therm1)  # update colorbar range (new version)
 
     ax.draw_artist(therm1)  # draw new thermal image
     fig_pc.canvas.blit(ax.bbox)  # draw background
     fig_pc.canvas.flush_events()  # show the new image
 
 
-# TODO: try to not show die figure to improve the program efficiency
-'''
-frame = np.zeros(mlx_shape[0] * mlx_shape[1])  # 768 pts
-data_array_raw = np.fliplr(np.reshape(frame, mlx_shape))  # reshape, flip data
-data_array_raw[23][31] = (data_array_raw[22][31]
-                            + data_array_raw[23][30]
-                            + data_array_raw[22][30]) / 3  # fix error pixel before
-data_array_raw = ndimage.zoom(data_array_raw, mlx_interp_val)  # interpolate
-print(data_array_raw)
-'''
-
-plot_update()
+while True:
+    try:
+        plot_update()
+    except:
+        continue

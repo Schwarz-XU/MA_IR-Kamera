@@ -52,7 +52,7 @@ def plot_update():
     therm1.set_array(data_array_raw)  # set data
     therm1.set_clim(vmin=np.min(data_array_raw), vmax=np.max(data_array_raw))  # set bounds
     # cbar.on_mappable_changed(therm1)  # old version of function
-    cbar.update_normal(therm1) # update colorbar range (new version)
+    cbar.update_normal(therm1)  # update colorbar range (new version)
 
     ax.draw_artist(therm1)  # draw new thermal image
     fig.canvas.blit(ax.bbox)  # draw background
@@ -61,15 +61,6 @@ def plot_update():
 
 
 # TODO: try to not show die figure to improve the program efficiency
-'''
-frame = np.zeros(mlx_shape[0] * mlx_shape[1])  # 768 pts
-data_array_raw = np.fliplr(np.reshape(frame, mlx_shape))  # reshape, flip data
-data_array_raw[23][31] = (data_array_raw[22][31]
-                            + data_array_raw[23][30]
-                            + data_array_raw[22][30]) / 3  # fix error pixel before
-data_array_raw = ndimage.zoom(data_array_raw, mlx_interp_val)  # interpolate
-print(data_array_raw)
-'''
 
 
 # publisher
