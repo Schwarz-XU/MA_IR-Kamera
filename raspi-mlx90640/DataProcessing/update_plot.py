@@ -9,6 +9,7 @@ import time
 import sys
 import csv
 import os
+from scipy import ndimage
 
 
 # initial the global var.
@@ -53,12 +54,13 @@ fig_pc.canvas.draw()  # draw figure to copy background
 ax_background = fig_pc.canvas.copy_from_bbox(ax.bbox)  # copy background
 fig_pc.show()  # show the figure before blitting
 
-# frame = np.zeros(mlx_shape[0] * mlx_shape[1])  # 768 pts
+frame = np.zeros(24 * 32)  # 768 pts
 
 print(type(temperature_array))
 def plot_update():
     fig_pc.canvas.restore_region(ax_background)  # restore background
-
+    temperature_array = np.fliplr(np.reshape(frame, (24, 32)))  # reshape, flip data
+    temperature_array = ndimage.zoom(temperature_array, interp_val)
     therm1.set_array(temperature_array)  # set data
     therm1.set_clim(vmin=np.min(temperature_array), vmax=np.max(temperature_array))  # set bounds
     cbar.update_normal(therm1) # update colorbar range (new version)
