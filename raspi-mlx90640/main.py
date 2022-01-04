@@ -26,5 +26,5 @@ from TemperatureMeasurement import mlx90640, high_fps
 if __name__ == "__main__":
     sys.path.append(os.path.abspath("."))
     print(os.path.abspath("."))
-    # mlx90640()
-    high_fps()
+    # mlx90640().run()
+    high_fps.run()

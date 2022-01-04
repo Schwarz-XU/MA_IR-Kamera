@@ -55,25 +55,27 @@ client.on_connect = on_connect
 client.will_set("raspberry/pub/status", b'{"status": "off"}', retain=True)  # Set will to find the status of publisher
 client.connect("broker.emqx.io", 1883, 60)  # TODO: free server right now, replace it with institute's server later
 
-t_array = []
 
-while True:
-    t1 = time.monotonic()  # for determining frame rate
-    try:
-        plot_update()  # update plot
-        data_array_raw = plot_update()
+def run():
+    t_array = []
 
-        # send all data_array to the broker
-        data_array_str = np.array2string(data_array_raw, precision=2, separator=",",
-                                         formatter={'float_kind': lambda x: "%.2f" % x})
-        client.publish('raspberry/temperature_array', payload=data_array_str, qos=0, retain=False)
-        client.publish('raspberry/temperature_(0;0)', payload=data_array_raw[0][0], qos=0, retain=True)
-        print(f"send {data_array_str} to raspberry/temperature_array")
-    except:
-        continue
+    while True:
+        t1 = time.monotonic()  # for determining frame rate
+        try:
+            plot_update()  # update plot
+            data_array_raw = plot_update()
 
-    # approximating frame rate
-    t_array.append(time.monotonic() - t1)
-    if len(t_array) > 10:
-        t_array = t_array[1:]  # recent times for frame rate approx
-    print('Frame Rate: {0:2.1f}fps'.format(len(t_array) / np.sum(t_array)))
+            # send all data_array to the broker
+            data_array_str = np.array2string(data_array_raw, precision=2, separator=",",
+                                             formatter={'float_kind': lambda x: "%.2f" % x})
+            client.publish('raspberry/temperature_array', payload=data_array_str, qos=0, retain=False)
+            client.publish('raspberry/temperature_(0;0)', payload=data_array_raw[0][0], qos=0, retain=True)
+            print(f"send {data_array_str} to raspberry/temperature_array")
+        except:
+            continue
+
+        # approximating frame rate
+        t_array.append(time.monotonic() - t1)
+        if len(t_array) > 10:
+            t_array = t_array[1:]  # recent times for frame rate approx
+        print('Frame Rate: {0:2.1f}fps'.format(len(t_array) / np.sum(t_array)))
