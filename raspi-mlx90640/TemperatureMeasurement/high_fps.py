@@ -20,7 +20,7 @@ mlx_interp_shape = (mlx_shape[0] * mlx_interp_val,
                     mlx_shape[1] * mlx_interp_val)  # new shape
 
 # set plot
-fig = plt.figure(figsize=(12, 9))  # start figure
+fig = plt.figure(figsize=(1, 1))  # start figure
 ax = fig.add_subplot(111)  # add subplot
 fig.subplots_adjust(0.05, 0.05, 0.95, 0.95)  # get rid of unnecessary padding
 therm1 = ax.imshow(np.zeros(mlx_interp_shape), interpolation='none',
