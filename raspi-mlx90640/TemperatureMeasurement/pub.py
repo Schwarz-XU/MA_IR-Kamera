@@ -2,7 +2,6 @@
 import numpy as np
 import paho.mqtt.client as mqtt
 import time
-from TemperatureMeasurement import mlx90640
 
 
 class publisher:
