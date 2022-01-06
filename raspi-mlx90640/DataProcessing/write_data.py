@@ -1,6 +1,6 @@
 # write_data.py
-from TemperatureMeasurement import sub
-from datetime import datetime, date, time
+from DataAcquisition import sub
+from datetime import datetime, time
 import numpy as np
 import time
 import csv

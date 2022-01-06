@@ -61,13 +61,10 @@ def plot_update():
     return data_array_raw
 
 
-# TODO: try to not show die figure to improve the program efficiency
-
-
 # publisher
 def on_connect(client, userdata, flags, rc):
     print(f"Connected with result code {rc}")
-    
+
 
 # establish connection
 client = mqtt.Client()

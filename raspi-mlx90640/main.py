@@ -20,8 +20,8 @@ sudo i2cdetect -y 1
 """
 
 import sys, os
-from TemperatureMeasurement import high_fps
-# from TemperatureMeasurement import mlx90640
+from DataAcquisition import high_fps
+# from DataAcquisition import mlx90640
 
 
 if __name__ == "__main__":

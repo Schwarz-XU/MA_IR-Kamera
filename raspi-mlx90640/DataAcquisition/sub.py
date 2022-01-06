@@ -20,7 +20,7 @@ def on_message(client, userdata, msg):
     payload = msg.payload
 
 
-def run_sub():
+def run():
     # establish connection
     client = mqtt.Client()
     client.on_connect = on_connect
