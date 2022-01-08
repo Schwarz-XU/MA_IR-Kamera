@@ -1,10 +1,11 @@
 # ir_camera_pc.py
 import time
-import matplotlib; matplotlib.use("TkAgg")
 import matplotlib.pyplot as plt
 import numpy as np
+import matplotlib; matplotlib.use("TkAgg")
 from scipy import ndimage
 from DataAcquisition import sub
+from matplotlib.colors import ListedColormap, LinearSegmentedColormap
 
 
 interp_val = 20  # interpolation
@@ -12,7 +13,13 @@ interp_val = 20  # interpolation
 fig = plt.figure(figsize=(6, 4))
 ax = fig.add_subplot(111)
 fig.subplots_adjust(0.05, 0.05, 0.95, 0.95)
-therm = ax.imshow(np.zeros((24, 32)), interpolation='none', cmap=plt.cm.bwr, vmin=25, vmax=45, animated=True)
+'''
+# creat a customized colormap
+clist = ["blue", "cyan", "lime", "yellow", "red"]
+newcmp = LinearSegmentedColormap.from_list("therm", clist)
+'''
+therm = ax.imshow(np.zeros((24, 32)), interpolation='none', cmap="jet", vmin=25, vmax=45, animated=True)
+# therm = ax.imshow(np.zeros((24, 32)), interpolation='none', cmap=newcmp, vmin=25, vmax=45, animated=True)
 # set a color_scale
 color_scale = fig.colorbar(therm)
 color_scale.set_label('Temperature [$^{\circ}$C]', fontsize=11)
@@ -20,7 +27,7 @@ color_scale.set_label('Temperature [$^{\circ}$C]', fontsize=11)
 fig.canvas.draw()  # draw figure to copy background
 ax_background = fig.canvas.copy_from_bbox(ax.bbox)  # copy background
 fig.show()
-frame = np.zeros(768)
+frame = np.zeros(768)  # initial pixel number of mlx90640
 
 # initial global var.
 temperature_array = np.array([])
