@@ -1,5 +1,5 @@
 # ir_camera_pc.py
-import time
+import time 
 import matplotlib.pyplot as plt
 import numpy as np
 import matplotlib; matplotlib.use("TkAgg")

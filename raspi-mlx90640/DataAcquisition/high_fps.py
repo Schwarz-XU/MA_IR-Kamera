@@ -69,7 +69,37 @@ def run():
             data_array_str = np.array2string(data_array_raw, precision=2, separator=",",
                                              formatter={'float_kind': lambda x: "%.2f" % x})
             client.publish('raspberry/temperature_array', payload=data_array_str, qos=0, retain=False)
-            client.publish('raspberry/temperature_(0;0)', payload=data_array_raw[0][0], qos=0, retain=True)
+            # Temperature on element 1160
+            client.publish('raspberry/temperature_(5;8)', payload=data_array_raw[5][8], qos=0, retain=True)
+            client.publish('raspberry/temperature_(5;14)', payload=data_array_raw[5][14], qos=0, retain=True)
+            client.publish('raspberry/temperature_(5;20)', payload=data_array_raw[5][20], qos=0, retain=True)
+            client.publish('raspberry/temperature_(5;26)', payload=data_array_raw[5][26], qos=0, retain=True)
+            # Temperature on element 1150
+            client.publish('raspberry/temperature_(10;8)', payload=data_array_raw[10][8], qos=0, retain=True)
+            client.publish('raspberry/temperature_(10;14)', payload=data_array_raw[10][14], qos=0, retain=True)
+            client.publish('raspberry/temperature_(10;20)', payload=data_array_raw[10][20], qos=0, retain=True)
+            client.publish('raspberry/temperature_(10;26)', payload=data_array_raw[10][26], qos=0, retain=True)
+            # Temperature on element 1140
+            client.publish('raspberry/temperature_(15;8)', payload=data_array_raw[15][8], qos=0, retain=True)
+            client.publish('raspberry/temperature_(15;14)', payload=data_array_raw[15][14], qos=0, retain=True)
+            client.publish('raspberry/temperature_(15;20)', payload=data_array_raw[15][20], qos=0, retain=True)
+            client.publish('raspberry/temperature_(15;26)', payload=data_array_raw[15][26], qos=0, retain=True)
+            # Temperature on element 1130
+            client.publish('raspberry/temperature_(17;8)', payload=data_array_raw[17][8], qos=0, retain=True)
+            client.publish('raspberry/temperature_(17;14)', payload=data_array_raw[17][14], qos=0, retain=True)
+            client.publish('raspberry/temperature_(17;20)', payload=data_array_raw[17][20], qos=0, retain=True)
+            client.publish('raspberry/temperature_(17;26)', payload=data_array_raw[17][26], qos=0, retain=True)
+            # Temperature on element 1120
+            client.publish('raspberry/temperature_(19;8)', payload=data_array_raw[19][8], qos=0, retain=True)
+            client.publish('raspberry/temperature_(19;14)', payload=data_array_raw[19][14], qos=0, retain=True)
+            client.publish('raspberry/temperature_(19;20)', payload=data_array_raw[19][20], qos=0, retain=True)
+            client.publish('raspberry/temperature_(19;26)', payload=data_array_raw[19][26], qos=0, retain=True)
+            # Temperature on element 1110
+            client.publish('raspberry/temperature_(20;8)', payload=data_array_raw[20][8], qos=0, retain=True)
+            client.publish('raspberry/temperature_(20;14)', payload=data_array_raw[20][14], qos=0, retain=True)
+            client.publish('raspberry/temperature_(20;20)', payload=data_array_raw[20][20], qos=0, retain=True)
+            client.publish('raspberry/temperature_(20;26)', payload=data_array_raw[20][26], qos=0, retain=True)
+
             print(f"send {data_array_str} to raspberry/temperature_array")
         except:
             continue
