@@ -1,4 +1,4 @@
-# write_data.py
+# write_data_csv.py
 from DataAcquisition import sub
 from datetime import datetime, time
 import numpy as np
@@ -14,11 +14,12 @@ temperature_array = np.array("")
 
 def write_csv():
     # receive data from sub.py
-    sub.run_sub()
+    sub.run()
     global payload
     global temperature_list
     global temperature_array
     payload = sub.payload
+    print(payload)
     if payload == bytes():
         pass  # if payload is empty, then pass
     else:
@@ -27,10 +28,10 @@ def write_csv():
         temperature_array = np.array(temperature_list).reshape(
             (24, 32))  # convert the temperature list into a 24x32 array
         print(temperature_list)
-        print(np.shape(temperature_array))
+        # print(np.shape(temperature_array))
         # write the temperature data into a .csv file
         file_path = os.path.abspath("../Data")
-        with open(file_path + "/Temperature_Data.csv", "a", newline="") as file:
+        with open(file_path + "/temperature_data.csv", "a", newline="") as file:
             # writer = csv.writer(file, delimiter=',', quotechar='"')
             writer = csv.writer(file)
             # get current date and time
@@ -41,7 +42,7 @@ def write_csv():
             position_list = []
             for i in range(0, np.shape(temperature_array)[0]):
                 for j in range(0, np.shape(temperature_array)[1]):
-                    position_list.append(str((i, j)))
+                    position_list.append("pos_{i}_{j}".format(i=i, j=j))
             # set headers
             headers = ["Date", "Time"] + position_list
             write_data = [current_date] + [current_time] + temperature_list
@@ -57,8 +58,7 @@ def write_csv():
             if file_is_empty:
                 writer.writerow(headers)  # if the file is empty, then write the headers
             writer.writerows([write_data])
-            # TODO: categorize the data with date.
-        time.sleep(2)
+        time.sleep(2)  # write data every 2 sec.
 
 
 def read_csv():
@@ -69,10 +69,11 @@ def read_csv():
             print(row)
 
 
-def run_write():
+def run():
     write_csv()
     # read_csv()
 
 
-while True:
-    run_write()
+if __name__ == '__main__':
+    while True:
+        run()

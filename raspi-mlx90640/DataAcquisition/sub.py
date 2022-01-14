@@ -30,3 +30,8 @@ def run():
     # start the loop
     client.loop_start()
     # client.loop_forever()
+
+
+if __name__ == '__main__':
+    while True:
+        run()

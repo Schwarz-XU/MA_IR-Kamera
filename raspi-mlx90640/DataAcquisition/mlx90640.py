@@ -69,10 +69,10 @@ def on_connect(client, userdata, flags, rc):
 # establish connection
 client = mqtt.Client()
 # client = mqtt.Client(client_id="mqttx_test")
-# client.username_pw_set(username="UEl-Rkl_Tm", password="12345678")  # TODO: not usable, need correction
+# client.username_pw_set(username="UEl-Rkl_Tm", password="12345678")
 client.on_connect = on_connect
 client.will_set("raspberry/pub/status", b'{"status": "off"}', retain=True)  # Set will to find the status of publisher
-client.connect("broker.emqx.io", 1883, 60)  # TODO: free server right now, replace it with institute's server later
+client.connect("broker.emqx.io", 1883, 60)
 
 
 def run():
@@ -97,3 +97,8 @@ def run():
         if len(t_array) > 10:
             t_array = t_array[1:]  # recent times for frame rate approx
         print('Frame Rate: {0:2.1f}fps'.format(len(t_array) / np.sum(t_array)))
+
+
+if __name__ == '__main__':
+    while True:
+        run()

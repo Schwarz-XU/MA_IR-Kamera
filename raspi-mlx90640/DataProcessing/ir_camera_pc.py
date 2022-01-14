@@ -13,13 +13,13 @@ interp_val = 20  # interpolation
 fig = plt.figure(figsize=(6, 4))
 ax = fig.add_subplot(111)
 fig.subplots_adjust(0.05, 0.05, 0.95, 0.95)
-'''
+
 # creat a customized colormap
-clist = ["blue", "cyan", "lime", "yellow", "red"]
+clist = ["blue", "lime", "lime", "yellow", "red"]
 newcmp = LinearSegmentedColormap.from_list("therm", clist)
-'''
-therm = ax.imshow(np.zeros((24, 32)), interpolation='none', cmap="jet", vmin=25, vmax=45, animated=True)
-# therm = ax.imshow(np.zeros((24, 32)), interpolation='none', cmap=newcmp, vmin=25, vmax=45, animated=True)
+
+# therm = ax.imshow(np.zeros((24, 32)), interpolation='none', cmap="jet", vmin=25, vmax=45, animated=True)
+therm = ax.imshow(np.zeros((24, 32)), interpolation='none', cmap=newcmp, vmin=25, vmax=45, animated=True)
 # set a color_scale
 color_scale = fig.colorbar(therm)
 color_scale.set_label('Temperature [$^{\circ}$C]', fontsize=11)
@@ -63,18 +63,24 @@ def update_plot(temperature_data):
     fig.canvas.flush_events()
 
 
-t_array = []
-while True:
-    t1 = time.monotonic()  # for determining frame rate
-    try:
-        data = data_access()
-        if data.size > 0:
-            update_plot(data)
-        else:
+def run():
+    t_array = []
+    while True:
+        t1 = time.monotonic()  # for determining frame rate
+        try:
+            data = data_access()
+            if data.size > 0:
+                update_plot(data)
+            else:
+                continue
+        except:
             continue
-    except:
-        continue
-    t_array.append(time.monotonic() - t1)
-    if len(t_array) > 10:
-        t_array = t_array[1:]  # recent times for frame rate approx
-    print('Frame Rate: {0:2.1f}fps'.format(len(t_array) / np.sum(t_array)))
+        t_array.append(time.monotonic() - t1)
+        if len(t_array) > 10:
+            t_array = t_array[1:]  # recent times for frame rate approx
+        print('Frame Rate: {0:2.1f}fps'.format(len(t_array) / np.sum(t_array)))
+
+
+if __name__ == '__main__':
+    while True:
+        run()

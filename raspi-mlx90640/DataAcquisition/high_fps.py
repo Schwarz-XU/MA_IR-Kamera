@@ -49,8 +49,7 @@ def on_connect(client, userdata, flags, rc):
 
 # establish connection
 client = mqtt.Client()
-# client = mqtt.Client(client_id="mqttx_test")
-# client.username_pw_set(username="UEl-Rkl_Tm", password="12345678")  # TODO: not usable, need correction
+# client.username_pw_set(username="UEl-Rkl_Tm", password="12345678")  # TODO: not usable, need correction (A: need TSL/SSL)
 client.on_connect = on_connect
 client.will_set("raspberry/pub/status", b'{"status": "off"}', retain=True)  # Set will to find the status of publisher
 client.connect("broker.emqx.io", 1883, 60)  # TODO: free server right now, replace it with institute's server later
@@ -69,6 +68,7 @@ def run():
             data_array_str = np.array2string(data_array_raw, precision=2, separator=",",
                                              formatter={'float_kind': lambda x: "%.2f" % x})
             client.publish('raspberry/temperature_array', payload=data_array_str, qos=0, retain=False)
+            # TODO: update picked pixel for each element
             # Temperature on element 1160
             client.publish('raspberry/temperature_(5;8)', payload=data_array_raw[5][8], qos=0, retain=True)
             client.publish('raspberry/temperature_(5;14)', payload=data_array_raw[5][14], qos=0, retain=True)
@@ -109,3 +109,8 @@ def run():
         if len(t_array) > 10:
             t_array = t_array[1:]  # recent times for frame rate approx
         print('Frame Rate: {0:2.1f}fps'.format(len(t_array) / np.sum(t_array)))
+
+
+if __name__ == '__main__':
+    while True:
+        run()
