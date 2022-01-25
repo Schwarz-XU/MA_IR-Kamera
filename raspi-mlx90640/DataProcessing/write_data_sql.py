@@ -23,7 +23,7 @@ for i in range(0, 24):
         q2.append("%s, ")
 q3 = "".join(q1).strip(', ') + ')' + ' VALUES '
 q4 = "".join(q2) + '%s, %s)'
-q5 = q3 + q4  # create the sql-sentence to insert 770 data
+q5 = q3 + q4  # create the sql-command to insert 770 data
 
 
 def write_db():
@@ -68,4 +68,14 @@ def run():
 
 if __name__ == '__main__':
     while True:
-        run()
+        cursor.execute("SHOW TABLES")
+        if cursor.fetchall():
+            initial_table = input("Do you want to initial the sql-table? (yes/no)")
+            if initial_table == "yes":
+                cursor.execute("DROP Table temperature_11xx")
+            elif initial_table == "no":
+                while True:
+                    run()
+        else:
+            while True:
+                run()

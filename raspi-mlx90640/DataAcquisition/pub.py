@@ -19,6 +19,7 @@ class publisher:
         print(f"send {data_str} data to raspberry/temperature_array")
         time.sleep(2)
 
+
 if __name__ == '__main__':
     while True:
         run()

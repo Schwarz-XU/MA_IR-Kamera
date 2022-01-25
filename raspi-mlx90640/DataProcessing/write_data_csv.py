@@ -46,14 +46,12 @@ def write_csv():
             # set headers
             headers = ["Date", "Time"] + position_list
             write_data = [current_date] + [current_time] + temperature_list
-            # print(headers)
-            # print([write_data])
 
-            # # write csv file with pandas-package
+            # # write csv file with pandas-library
             # temperature_data = pd.DataFrame([write_data], columns=headers)
             # temperature_data.to_csv(file)
 
-            # write csv file with csv-package
+            # write csv file with csv-library
             file_is_empty = os.stat(file_path + "/Temperature_Data.csv").st_size == 0
             if file_is_empty:
                 writer.writerow(headers)  # if the file is empty, then write the headers
