@@ -6,20 +6,11 @@ import time
 import csv
 import os
 
-# initial the global var.
-payload = bytes()
-temperature_list = []
-temperature_array = np.array("")
-
 
 def write_csv():
     # receive data from sub.py
     sub.run()
-    global payload
-    global temperature_list
-    global temperature_array
     payload = sub.payload
-    print(payload)
     if payload == bytes():
         pass  # if payload is empty, then pass
     else:
@@ -27,8 +18,6 @@ def write_csv():
             "]", "").split(",")  # reform the temperature list
         temperature_array = np.array(temperature_list).reshape(
             (24, 32))  # convert the temperature list into a 24x32 array
-        print(temperature_list)
-        # print(np.shape(temperature_array))
         # write the temperature data into a .csv file
         file_path = os.path.abspath("../Data")
         with open(file_path + "/temperature_data.csv", "a", newline="") as file:

@@ -29,13 +29,15 @@ q5 = q3 + q4  # create the sql-command to insert 770 data
 def write_db():
     # prepare_data
     sub.run()
-    payload = sub.payload
-    if payload == bytes():
+    # payload = sub.payload
+    temperature_array = sub.temperature_array
+    if temperature_array.size == 0:
+    # if payload == bytes():
         print("no data from the sensor, please wait for 2 sec or check the sensor")
         pass  # if payload is empty, then pass
     else:
-        temperature_list = str(payload, encoding="utf-8").replace("\n", "").replace(" ", "").replace("[", "").replace(
-            "]", "").split(",")  # reform the temperature list
+        # temperature_list = str(payload, encoding="utf-8").replace("\n", "").replace(" ", "").replace("[", "").replace("]", "").split(",")  # reform the temperature list
+        temperature_list = sub.temperature_list_str
         # get current date and time
         now = datetime.now()  # get current date and time
         current_date = now.strftime("%Y-%m-%d")

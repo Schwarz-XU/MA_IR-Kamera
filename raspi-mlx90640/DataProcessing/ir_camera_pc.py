@@ -29,25 +29,14 @@ ax_background = fig.canvas.copy_from_bbox(ax.bbox)  # copy background
 fig.show()
 frame = np.zeros(768)  # initial pixel number of mlx90640
 
+
 # initial global var.
-temperature_array = np.array([])
+# temperature_array = np.array([])
 
 
 def data_access():
     sub.run()
-    data_payload = sub.payload
-    global temperature_array
-    if data_payload == bytes():
-        print("the data_payload is empty")
-        pass
-    else:
-        temperature_list_str = str(data_payload, encoding="utf-8").replace("\n", "").replace(" ", "").replace("[", "").replace("]", "").split(",")  # reform the temperature list
-        temperature_list_num = []
-        # convert the data into float
-        for item in temperature_list_str:
-            temperature_list_num.append(float(item))
-        temperature_array = np.array(temperature_list_num).reshape(
-            (24, 32))  # convert the temperature list into a 24x32 array
+    temperature_array = sub.temperature_array
     return temperature_array
 
 
