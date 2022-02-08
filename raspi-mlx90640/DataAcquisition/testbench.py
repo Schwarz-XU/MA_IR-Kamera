@@ -25,7 +25,7 @@ if __name__ == "__main__":
             client.connect("broker.emqx.io", 1883, 60)  # TODO: free server right now, replace it with institute's server later
             # read data from plc via. pyads
             for i in range(0, 15):
-                data = plc.read_by_name("GVL_WtrSupCC.stZone11_PanelSup[{nPanelIndex}].fSupTempAct".format(nPanelIndex = i), pyads.PLCTYPE_REAL)
-                client.publish('raspberry/testbench/flowrate', payload=data, qos=0, retain=False)
+                data = str(plc.read_by_name("GVL_WtrSupCC.stZone11_PanelSup[{nPanelIndex}].fSupTempAct".format(nPanelIndex=i), pyads.PLCTYPE_REAL))
+                client.publish('testbench/flowrate/huba', payload=data, qos=0, retain=False)
         except:
             break
