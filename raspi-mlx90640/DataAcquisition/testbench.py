@@ -7,8 +7,8 @@ def on_connect(client, userdata, flags, rc):
     print(f"Connected with result code {rc}")
 
 
-def plc_connect(plc_address):
-    plc = pyads.Connection(plc_address, 851)
+def plc_connect(address):
+    plc = pyads.Connection(address, 851)
     plc.open()
     return plc
 
