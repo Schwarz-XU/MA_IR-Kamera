@@ -1,4 +1,4 @@
-# pub_pyads.py
+# sps_pyads.py
 import pyads
 from DataAcquisition import sub
 
@@ -6,14 +6,19 @@ from DataAcquisition import sub
 plc = pyads.Connection('5.78.127.222.1.1', 851)
 plc.open()
 
-plc.read_by_name("GVL_WtrSupPri.fHWSupTempAct", pyads.PLCTYPE_REAL)
+plc.read_by_name("GVL_WtrSupCC.stZone11_PanelSup[0].fSupTempAct", pyads.PLCTYPE_REAL)
 
 # initial temperature data
-sub.run()
-payload = sub.payload
-print(payload)
-for i in range(0, 15):
-    plc.write_by_name("GVL_WtrSupCC.stZone11_PanelSup[{nPanelIndex}].fSurfTempAct".format(nPanelIndex=i), payload, pyads.PLCTYPE_REAL)
+# sub.run()
+# temperature_data = sub.temperature_array
+
+
+# write data via. pyads
+# for i in range(0, 15):
+#    plc.write_by_name("GVL_WtrSupCC.stZone11_PanelSup[{nPanelIndex}].fSurfTempAct".format(nPanelIndex=i), temperature_data, pyads.PLCTYPE_REAL)
+
+
+
 '''
 # real，浮点型
 while True:
