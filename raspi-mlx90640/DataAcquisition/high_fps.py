@@ -68,7 +68,7 @@ def run():
             data_array_str = np.array2string(data_array_raw, precision=2, separator=",",
                                              formatter={'float_kind': lambda x: "%.2f" % x})
             client.publish('raspberry/temperature_array', payload=data_array_str, qos=0, retain=False)
-            # TODO: update picked pixel for each element
+            # TODO: update pixel-list for each element
             # Temperature on element 1160
             client.publish('raspberry/temperature_(5;8)', payload=data_array_raw[5][8], qos=0, retain=True)
             client.publish('raspberry/temperature_(5;14)', payload=data_array_raw[5][14], qos=0, retain=True)
