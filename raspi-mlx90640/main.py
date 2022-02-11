@@ -28,4 +28,4 @@ if __name__ == "__main__":
     sys.path.append(os.path.abspath("."))
     print(os.path.abspath("."))
     # mlx90640.run()
-    high_fps.run()
+    high_fps.run()  # for higher performance
