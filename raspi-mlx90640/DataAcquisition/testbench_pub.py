@@ -32,7 +32,7 @@ def publish(plc_address):
                             b'{"status": "off"}',
                             retain=True)  # Set will to find the status of publisher
             client.connect(broker_address, broker_port, 60)
-            # read data from plc via. pyads
+            # read data from plc via. pyads, publish to the MQTT broker
             # Zone 11
             # Panel data
             for i in range(0, 15):
@@ -115,43 +115,44 @@ def publish(plc_address):
                                payload=fSecPumpPowerSet, qos=0, retain=False)
                 client.publish('Rkl/WtrSup/zone11/sec_{nSecSysIndex}/bHeatingSystem'.format(nSecSysIndex=sec_name),
                                payload=bSecHeatingSystem, qos=0, retain=False)
-            '''
+
             # Primary side data
             # get data
             for k in range(0, 2):
-                fPriCircSupTempAct = str(plc.read_by_name("GVL_WtrSupPri.stPriSup[{nPriSysIndex}].fCircSupTempAct"
+                fPriCircSupTempAct = str(plc.read_by_name("GVL_WtrSupPri.stWtrPriSup[{nPriSysIndex}].fCircSupTempAct"
                                                           .format(nPriSysIndex=k), pyads.PLCTYPE_REAL))
-                fPriCircRtnTempAct = str(plc.read_by_name("GVL_WtrSupPri.stPriSup[{nPriSysIndex}].fCircRtnTempAct"
+                fPriCircRtnTempAct = str(plc.read_by_name("GVL_WtrSupPri.stWtrPriSup[{nPriSysIndex}].fCircRtnTempAct"
                                                           .format(nPriSysIndex=k), pyads.PLCTYPE_REAL))
-                fPriMainSupTempAct = str(plc.read_by_name("GVL_WtrSupPri.stPriSup[{nPriSysIndex}].fMainSupTempAct"
+                fPriMainSupTempAct = str(plc.read_by_name("GVL_WtrSupPri.stWtrPriSup[{nPriSysIndex}].fMainSupTempAct"
                                                           .format(nPriSysIndex=k), pyads.PLCTYPE_REAL))
-                fPriMainRtnTempAct = str(plc.read_by_name("GVL_WtrSupPri.stPriSup[{nPriSysIndex}].fMainRtnTempAct"
+                fPriMainRtnTempAct = str(plc.read_by_name("GVL_WtrSupPri.stWtrPriSup[{nPriSysIndex}].fMainRtnTempAct"
                                                           .format(nPriSysIndex=k), pyads.PLCTYPE_REAL))
-                fPriValveOpenSet = str(plc.read_by_name("GVL_WtrSupPri.stPriSup[{nPriSysIndex}].fValveOpenSet"
+                fPriValveOpenSet = str(plc.read_by_name("GVL_WtrSupPri.stWtrPriSup[{nPriSysIndex}].fValveOpenSet"
                                                         .format(nPriSysIndex=k), pyads.PLCTYPE_REAL))
-                fPriPumpPowerSet = str(plc.read_by_name("GVL_WtrSupPri.stPriSup[{nPriSysIndex}].fPumpPowerSet"
+                fPriPumpPowerSet = str(plc.read_by_name("GVL_WtrSupPri.stWtrPriSup[{nPriSysIndex}].fPumpPowerSet"
                                                         .format(nPriSysIndex=k), pyads.PLCTYPE_REAL))
                 # publish data to broker
-            if k == 0:
-                pri_name = "CW"
-            else:
-                pri_name = "HW"
+                if k == 0:
+                    pri_name = "CW"
+                else:
+                    pri_name = "HW"
 
-            client.publish('Rkl/WtrSup/pri/fCircSupTempAct'.format(nSecSysIndex=pri_name),
-                           payload=fPriCircSupTempAct, qos=0, retain=False)
-            client.publish('Rkl/WtrSup/pri/fCircRtnTempAct'.format(nSecSysIndex=pri_name),
-                           payload=fPriCircRtnTempAct, qos=0, retain=False)
-            client.publish('Rkl/WtrSup/pri/fMainSupTempAct'.format(nSecSysIndex=pri_name),
-                           payload=fPriMainSupTempAct, qos=0, retain=False)
-            client.publish('Rkl/WtrSup/pri/fMainRtnTempAct'.format(nSecSysIndex=pri_name),
-                           payload=fPriMainRtnTempAct, qos=0, retain=False)
-            client.publish('Rkl/WtrSup/pri/fValveOpenSet'.format(nSecSysIndex=pri_name),
-                           payload=fPriValveOpenSet, qos=0, retain=False)
-            client.publish('Rkl/WtrSup/pri/fPumpPowerSet'.format(nSecSysIndex=pri_name),
-                           payload=fPriPumpPowerSet, qos=0, retain=False)
-            '''
-        except Exception as e:
-            logging.error(traceback.format_exc())
+                client.publish('Rkl/WtrSup/pri_{nPriSysIndex}/fCircSupTempAct'.format(nPriSysIndex=pri_name),
+                               payload=fPriCircSupTempAct, qos=0, retain=False)
+                client.publish('Rkl/WtrSup/pri_{nPriSysIndex}/fCircRtnTempAct'.format(nPriSysIndex=pri_name),
+                               payload=fPriCircRtnTempAct, qos=0, retain=False)
+                client.publish('Rkl/WtrSup/pri_{nPriSysIndex}/fMainSupTempAct'.format(nPriSysIndex=pri_name),
+                               payload=fPriMainSupTempAct, qos=0, retain=False)
+                client.publish('Rkl/WtrSup/pri_{nPriSysIndex}/fMainRtnTempAct'.format(nPriSysIndex=pri_name),
+                               payload=fPriMainRtnTempAct, qos=0, retain=False)
+                client.publish('Rkl/WtrSup/pri_{nPriSysIndex}/fValveOpenSet'.format(nPriSysIndex=pri_name),
+                               payload=fPriValveOpenSet, qos=0, retain=False)
+                client.publish('Rkl/WtrSup/pri_{nPriSysIndex}/fPumpPowerSet'.format(nPriSysIndex=pri_name),
+                               payload=fPriPumpPowerSet, qos=0, retain=False)
+        except Exception:
+            print("Error: errors occur")
+        else:
+            print("Publish system is running")
 
 
 if __name__ == "__main__":

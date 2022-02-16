@@ -1,8 +1,6 @@
 # testbench_control.py
 import paho.mqtt.client as mqtt
 import pyads
-import traceback
-import logging
 
 
 plc_address = "5.78.127.222.1.1"
@@ -10,11 +8,8 @@ plc_port = 851
 broker_address = "broker.emqx.io"
 broker_port = 1883
 
-
-def plc_connect(address, port):
-    plc = pyads.Connection(address, port)
-    plc.open()
-    return plc
+payload = bytes()
+topic = ""
 
 
 def on_connect(client, userdata, flags, rc):
@@ -35,23 +30,36 @@ def on_connect(client, userdata, flags, rc):
 
 
 def on_message(client, userdata, msg):
-    var_names = globals()
+    global payload
+    global topic
+    payload = msg.payload
+    topic = msg.topic
+    print(payload
+          )
+
+
+def plc_write(address, port):
+    # plc = pyads.Connection(address, port)
+    # plc.open()
+    var_names = locals()
     for i in range(0, 15):
-        if msg.topic == "Rkl/WtrSup/zone11/panel_{nPanelIndex}/eCtrlMode".format(nPanelIndex=i):
-            var_names["eCtrlMode_" + str(i)] = int(msg.payload.decode("utf-8"))
-        elif msg.topic == "Rkl/WtrSup/zone11/panel_{nPanelIndex}/fSupTempSet".format(nPanelIndex=i):
-            var_names["fSupTempSet_" + str(i)] = int(msg.payload.decode("utf-8"))
-        elif msg.topic == "Rkl/WtrSup/zone11/panel_{nPanelIndex}/f2WValveOpenSetMan".format(nPanelIndex=i):
-            var_names["f2WValveOpenSetMan_" + str(i)] = float(msg.payload.decode("utf-8"))
-        elif msg.topic == "Rkl/WtrSup/zone11/panel_{nPanelIndex}/b6WValveActivateMan".format(nPanelIndex=i):
-            var_names["b6WValveActivateMan_" + str(i)] = bool(msg.payload.decode("utf-8"))
-        elif msg.topic == "Rkl/WtrSup/zone11/panel_{nPanelIndex}/bPumpActivateMan".format(nPanelIndex=i):
-            var_names["bPumpActivateMan_" + str(i)] = bool(msg.payload.decode("utf-8"))
+        if topic == "Rkl/WtrSup/zone11/panel_{nPanelIndex}/eCtrlMode".format(nPanelIndex=i):
+            var_names["eCtrlMode_" + str(i)] = int(payload.decode("utf-8"))
+        elif topic == "Rkl/WtrSup/zone11/panel_{nPanelIndex}/fSupTempSet".format(nPanelIndex=i):
+            var_names["fSupTempSet_" + str(i)] = float(payload.decode("utf-8"))
+        elif topic == "Rkl/WtrSup/zone11/panel_{nPanelIndex}/f2WValveOpenSetMan".format(nPanelIndex=i):
+            var_names["f2WValveOpenSetMan_" + str(i)] = float(payload.decode("utf-8"))
+        elif topic == "Rkl/WtrSup/zone11/panel_{nPanelIndex}/b6WValveActivateMan".format(nPanelIndex=i):
+            var_names["b6WValveActivateMan_" + str(i)] = bool(payload.decode("utf-8"))
+        elif topic == "Rkl/WtrSup/zone11/panel_{nPanelIndex}/bPumpActivateMan".format(nPanelIndex=i):
+            var_names["bPumpActivateMan_" + str(i)] = bool(payload.decode("utf-8"))
         print(var_names["eCtrlMode_" + str(i)])
 
+
 def run():
-    # rkl_plc = plc_connect(plc_address, plc_port)
     # print("this is running")
+    # plc_write(plc_address, plc_port)
+    plc_write(plc_address, plc_port)
     client = mqtt.Client()
     client.on_connect = on_connect
     client.on_message = on_message
@@ -60,5 +68,7 @@ def run():
 
 
 if __name__ == "__main__":
-    run()
-    # rkl_plc = pyads.Connection(plc_address, plc_port)
+    try:
+        run()
+    except Exception:
+        print("Error: errors occur")

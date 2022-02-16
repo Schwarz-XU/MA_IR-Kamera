@@ -101,8 +101,11 @@ def run():
             client.publish('raspberry/temperature_(20;26)', payload=data_array_raw[20][26], qos=0, retain=True)
 
             print(f"send {data_array_str} to raspberry/temperature_array")
-        except:
+        except BaseException:
+            print("Error: error occurs!")
             continue
+        else:
+            print("MQTT: publish success!")
 
         # approximating frame rate
         t_array.append(time.monotonic() - t1)
