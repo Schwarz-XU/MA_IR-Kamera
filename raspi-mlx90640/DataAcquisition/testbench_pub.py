@@ -21,8 +21,8 @@ def plc_connect(address, port):
     return plc
 
 
-def publish(plc_address):
-    plc = plc_connect(plc_address)
+def publish(plc_address, plc_port):
+    plc = plc_connect(plc_address, plc_port)
     while True:
         try:
             # establish connection
