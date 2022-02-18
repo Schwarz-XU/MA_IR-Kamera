@@ -14,6 +14,7 @@ fSupTempSet_dic = {}
 f2WValveOpenSetMan_dic = {}
 b6WValveActivateMan_dic = {}
 bPumpActivateMan_dic = {}
+eCtrlMode_wall_dic = {"Wall_10XX":Queue(), "Wall_11XX":Queue(), "Wall_12XX":Queue()}
 
 for i in range(0, 15):
     eCtrlMode_dic["eCtrlMode_" + str(i)] = Queue()
@@ -29,7 +30,9 @@ def on_connect(client, userdata, flags, rc):
     else:
         print(f"Connected fail with code {rc}")
     # subscribe the topic
-
+    client.subscribe("Rkl/WtrSup/zone11/wall_10XX/eCtrlMode")
+    client.subscribe("Rkl/WtrSup/zone11/wall_11XX/eCtrlMode")
+    client.subscribe("Rkl/WtrSup/zone11/wall_12XX/eCtrlMode")
     for j in range(0, 15):
         client.subscribe("Rkl/WtrSup/zone11/panel_{nPanelIndex}/eCtrlMode".format(nPanelIndex=j))
         client.subscribe("Rkl/WtrSup/zone11/panel_{nPanelIndex}/fSupTempSet".format(nPanelIndex=j))
@@ -42,8 +45,17 @@ def on_connect(client, userdata, flags, rc):
 def on_message(client, userdata, msg):
     payload = msg.payload
     topic = msg.topic
+    print(payload)
+    print(topic)
     # Zone 11
     # Put command into queue
+
+    if topic == "Rkl/WtrSup/zone11/wall_10XX/eCtrlMode":
+        eCtrlMode_wall_dic["Wall_10XX"].put(int(payload.decode("utf-8"))) 
+    if topic == "Rkl/WtrSup/zone11/wall_11XX/eCtrlMode":
+        eCtrlMode_wall_dic["Wall_11XX"].put(int(payload.decode("utf-8"))) 
+    if topic == "Rkl/WtrSup/zone11/wall_12XX/eCtrlMode":
+        eCtrlMode_wall_dic["Wall_12XX"].put(int(payload.decode("utf-8"))) 
     for k in range(0, 15):
         if topic == "Rkl/WtrSup/zone11/panel_{nPanelIndex}/eCtrlMode".format(nPanelIndex=k):
             eCtrlMode_dic["eCtrlMode_" + str(k)].put(int(payload.decode("utf-8")))
@@ -56,7 +68,7 @@ def on_message(client, userdata, msg):
         elif topic == "Rkl/WtrSup/zone11/panel_{nPanelIndex}/bPumpActivateMan".format(nPanelIndex=k):
             bPumpActivateMan_dic["bPumpActivateMan_" + str(k)].put(bool(payload.decode("utf-8")))
         else:
-            print("Wait for message from broker")
+            print("Panel_{Panel_Index} waits for message from broker".format(Panel_Index=k))
 
 
 def plc_write(my_plc):
@@ -102,9 +114,9 @@ def plc_write(my_plc):
 def run():
     plc = pyads.Connection(plc_address, plc_port)
     plc.open()
+    client = mqtt.Client()
+    client.on_connect = on_connect
     try:
-        client = mqtt.Client()
-        client.on_connect = on_connect
         client.on_message = on_message
         client.connect(broker_address, broker_port, 60)
         client.loop_start()
