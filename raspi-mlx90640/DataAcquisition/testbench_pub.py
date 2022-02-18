@@ -1,8 +1,6 @@
 # testbench_pub.py
-import traceback
 import paho.mqtt.client as mqtt
 import pyads
-import logging
 
 plc_address = "5.78.127.222.1.1"
 plc_port = 851
