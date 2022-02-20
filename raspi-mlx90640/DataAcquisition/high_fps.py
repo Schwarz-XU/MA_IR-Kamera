@@ -47,12 +47,14 @@ def on_connect(client, userdata, flags, rc):
     print(f"Connected with result code {rc}")
 
 
+broker_address = "mqtt.eclipseprojects.io"
+broker_port = 1883
 # establish connection
 client = mqtt.Client()
 # client.username_pw_set(username="UEl-Rkl_Tm", password="12345678")  # TODO: not usable, need correction (A: need TSL/SSL)
 client.on_connect = on_connect
 client.will_set("raspberry/pub/status", b'{"status": "off"}', retain=True)  # Set will to find the status of publisher
-client.connect("broker.emqx.io", 1883, 60)  # TODO: free server right now, replace it with institute's server later
+client.connect(broker_address, broker_port, 60)  # TODO: free server right now, replace it with institute's server later
 
 
 def run():
@@ -101,8 +103,8 @@ def run():
             client.publish('raspberry/temperature_(20;26)', payload=data_array_raw[20][26], qos=0, retain=True)
 
             print(f"send {data_array_str} to raspberry/temperature_array")
-        except BaseException:
-            print("Error: error occurs!")
+        except Exception as e:
+            print(repr(e))
             continue
         else:
             print("MQTT: publish success!")

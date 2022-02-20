@@ -66,13 +66,15 @@ def on_connect(client, userdata, flags, rc):
     print(f"Connected with result code {rc}")
 
 
+broker_address = "mqtt.eclipseprojects.io"
+broker_port = 1883
 # establish connection
 client = mqtt.Client()
 # client = mqtt.Client(client_id="mqttx_test")
 # client.username_pw_set(username="UEl-Rkl_Tm", password="12345678")
 client.on_connect = on_connect
 client.will_set("raspberry/pub/status", b'{"status": "off"}', retain=True)  # Set will to find the status of publisher
-client.connect("broker.emqx.io", 1883, 60)
+client.connect(broker_address, broker_port, 60)
 
 
 def run():

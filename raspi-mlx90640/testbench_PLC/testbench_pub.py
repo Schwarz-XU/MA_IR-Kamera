@@ -4,13 +4,16 @@ import pyads
 
 plc_address = "5.78.127.222.1.1"
 plc_port = 851
-broker_address = "broker.emqx.io"
+broker_address = "mqtt.eclipseprojects.io"
 broker_port = 1883
 
 
 # publisher
 def on_connect(client, userdata, flags, rc):
-    print(f"Connected with result code {rc}")
+    if rc == 0:
+        print("Connect success")
+    else:
+        print(f"Connected with result code {rc}")
 
 
 def plc_connect(address, port):
@@ -147,8 +150,8 @@ def publish(plc_address, plc_port):
                                payload=fPriValveOpenSet, qos=0, retain=False)
                 client.publish('Rkl/WtrSup/pri_{nPriSysIndex}/fPumpPowerSet'.format(nPriSysIndex=pri_name),
                                payload=fPriPumpPowerSet, qos=0, retain=False)
-        except Exception:
-            print("Error: errors occur")
+        except Exception as e:
+            print(repr(e))
         else:
             print("Publish system is running")
 

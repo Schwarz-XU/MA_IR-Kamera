@@ -62,8 +62,9 @@ def run():
                 update_plot(data)
             else:
                 continue
-        except:
-            continue
+        except Exception as e:
+            print(repr(e))
+            break
         t_array.append(time.monotonic() - t1)
         if len(t_array) > 10:
             t_array = t_array[1:]  # recent times for frame rate approx
@@ -71,5 +72,4 @@ def run():
 
 
 if __name__ == '__main__':
-    while True:
-        run()
+    run()

@@ -6,7 +6,8 @@ from queue import Queue
 
 plc_address = "5.78.127.222.1.1"
 plc_port = 851
-
+broker_address = "mqtt.eclipseprojects.io"
+broker_port = 1883
 # use different method
 data = Queue()
 write = None
@@ -36,7 +37,7 @@ if __name__ == "__main__":
             client.on_connect = on_connect
             client.on_message = on_message
             # client.will_set("raspberry/test/status", b'{"status": "off"}', retain=True)  # Set will to find the status of publisher
-            client.connect("broker.emqx.io", 1883, 60)  # TODO: free server right now, replace it with institute's server later
+            client.connect(broker_address, broker_port, 60)  # TODO: free server right now, replace it with institute's server later
             client.loop_start()
             # wirte data via. pyads
             if not data.empty():
