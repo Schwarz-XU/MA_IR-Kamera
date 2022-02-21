@@ -67,7 +67,7 @@ def plc_write(plc, queue, var_address, var_type):
 
     if not queue.empty():
         print("queue not empty")
-        plc.write_by_name(var_address, queue.get(), var_type)
+        # plc.write_by_name(var_address, queue.get(), var_type)
         print(queue.get())
     else:
         print(f"{queue} is empty")
@@ -88,8 +88,8 @@ def run():
             time.sleep(0.1)
         while not message_received:
             time.sleep(0.1)
-        plc_write(plc, pri_eCtrlMode_dic["CW"])
-        plc_write(plc, pri_eCtrlMode_dic["HW"])
+        # plc_write(plc, pri_eCtrlMode_dic["CW"])
+        # plc_write(plc, pri_eCtrlMode_dic["HW"])
         client.loop_stop()
     except Exception as e:
         print(repr(e))
