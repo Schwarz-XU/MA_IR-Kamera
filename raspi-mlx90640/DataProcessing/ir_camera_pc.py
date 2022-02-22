@@ -7,7 +7,6 @@ from scipy import ndimage
 from DataAcquisition import sub
 from matplotlib.colors import ListedColormap, LinearSegmentedColormap
 
-
 interp_val = 20  # interpolation
 # create the figure
 fig = plt.figure(figsize=(6, 4))
