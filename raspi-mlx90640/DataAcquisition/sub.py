@@ -2,8 +2,8 @@
 import paho.mqtt.client as mqtt
 import numpy as np
 
-broker_address = "mqtt.eclipseprojects.io"
-# broker_address = "broker.emqx.io"
+# broker_address = "mqtt.eclipseprojects.io"
+broker_address = "broker.emqx.io"
 broker_port = 1883
 
 
