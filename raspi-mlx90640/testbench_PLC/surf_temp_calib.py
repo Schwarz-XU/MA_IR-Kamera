@@ -11,27 +11,29 @@ if __name__ == '__main__':
         try:
             sub.run()
             temperature_array = sub.temperature_array
-            with open("surf_temp_1150.csv", "a", newline="") as file:
+            now = str(datetime.now().strftime("%m%d_%H%M"))
+            file_name = now + "__surf_temp_1150.csv"
+            with open(file_name, "a", newline="") as file:
                 if not temperature_array.size == 0:
                     i += 1
-                    temp_710 = temperature_array[7][10]
-                    temp_714 = temperature_array[7][14]
+                    temp_79 = temperature_array[7][9]
+                    temp_712 = temperature_array[7][12]
+                    temp_715 = temperature_array[7][15]
                     temp_718 = temperature_array[7][18]
-                    temp_722 = temperature_array[7][22]
-                    temp_7_arv = np.average([temp_710, temp_714, temp_718, temp_722])
-                    temp_910 = temperature_array[9][10]
-                    temp_914 = temperature_array[9][14]
+                    temp_7_arv = np.average([temp_79, temp_712, temp_715, temp_718])
+                    temp_99 = temperature_array[9][9]
+                    temp_912 = temperature_array[9][12]
+                    temp_915 = temperature_array[9][15]
                     temp_918 = temperature_array[9][18]
-                    temp_922 = temperature_array[9][22]
-                    temp_9_arv = np.average([temp_910, temp_914, temp_918, temp_922])
-                    temp_1110 = temperature_array[11][10]
-                    temp_1114 = temperature_array[11][14]
+                    temp_9_arv = np.average([temp_99, temp_912, temp_915, temp_918])
+                    temp_119 = temperature_array[11][9]
+                    temp_1112 = temperature_array[11][12]
+                    temp_1115 = temperature_array[11][15]
                     temp_1118 = temperature_array[11][18]
-                    temp_1122 = temperature_array[11][22]
-                    temp_11_arv = np.average([temp_1110, temp_1114, temp_1118, temp_1122])
+                    temp_11_arv = np.average([temp_119, temp_1112, temp_1115, temp_1118])
                     temp_1150_arv = np.average([temp_7_arv, temp_9_arv, temp_11_arv])
-                    data_list = [i, temp_710, temp_714, temp_718, temp_722, temp_910, temp_914, temp_918,
-                                 temp_922, temp_1110, temp_1114, temp_1118, temp_1122, temp_7_arv, temp_9_arv,
+                    data_list = [i, temp_79, temp_712, temp_715, temp_718, temp_99, temp_912, temp_915,
+                                 temp_918, temp_119, temp_1112, temp_1115, temp_1118, temp_7_arv, temp_9_arv,
                                  temp_11_arv, temp_1150_arv]
                     print(data_list)
                     writer = csv.writer(file)
