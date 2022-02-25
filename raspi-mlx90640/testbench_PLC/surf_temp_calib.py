@@ -3,19 +3,19 @@ import csv
 from datetime import datetime
 import time
 import numpy as np
-import paho.mqtt.client as mqtt
 
 i = 0
+now = str(datetime.now().strftime("%m%d_%H%M"))
+file_name = now + "_surf_temp_1150.csv"
+
 if __name__ == '__main__':
     while True:
         try:
             sub.run()
             temperature_array = sub.temperature_array
-            now = str(datetime.now().strftime("%m%d_%H%M"))
-            file_name = now + "__surf_temp_1150.csv"
+
             with open(file_name, "a", newline="") as file:
                 if not temperature_array.size == 0:
-                    i += 1
                     temp_79 = temperature_array[7][9]
                     temp_712 = temperature_array[7][12]
                     temp_715 = temperature_array[7][15]
@@ -35,11 +35,13 @@ if __name__ == '__main__':
                     data_list = [i, temp_79, temp_712, temp_715, temp_718, temp_99, temp_912, temp_915,
                                  temp_918, temp_119, temp_1112, temp_1115, temp_1118, temp_7_arv, temp_9_arv,
                                  temp_11_arv, temp_1150_arv]
+                    i += 1
                     print(data_list)
                     writer = csv.writer(file)
                     writer.writerow(data_list)
                 time.sleep(1)
                 if i == 600:
+                    print("finish after 10min")
                     break
                 else:
                     continue

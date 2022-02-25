@@ -47,7 +47,8 @@ def on_connect(client, userdata, flags, rc):
     print(f"Connected with result code {rc}")
 
 
-broker_address = "mqtt.eclipseprojects.io"
+# broker_address = "mqtt.eclipseprojects.io"
+broker_address = "broker.emqx.io"
 broker_port = 1883
 # establish connection
 client = mqtt.Client()
