@@ -29,7 +29,7 @@ def connect_mqtt():
             connected = True
         else:
             print("Failed to connect, return code %d\n", rc)
-    client = mqtt.Client(clientid = "Rkl_TwinCAT", clean_session=True)
+    client = mqtt.Client(client_id="Rkl_TwinCAT", clean_session=True)
     client.on_connect = on_connect
     client.connect(broker_address, broker_port)
     return client

@@ -11,7 +11,7 @@ time = []
 time_gap = 10
 
 now = str(datetime.now().strftime("%m%d_%H%M"))
-file_name = "resp_surf-sup.csv"
+file_name = "../Data/resp_surf-sup.csv"
 with open(file_name, 'r') as csvfile:
     plots = csv.reader(csvfile, delimiter=',')
     for row in plots:
