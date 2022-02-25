@@ -1,0 +1,872 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>443</width>
+    <height>416</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="tabShape">
+   <enum>QTabWidget::Rounded</enum>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout_3">
+    <item row="0" column="0">
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="tab_2">
+       <attribute name="title">
+        <string>Zone11_Floor</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_4">
+        <item row="0" column="0">
+         <layout class="QGridLayout" name="Zone11_Floor">
+          <item row="4" column="1">
+           <widget class="QSpinBox" name="STset_10L2">
+            <property name="minimum">
+             <number>15</number>
+            </property>
+            <property name="maximum">
+             <number>45</number>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLabel" name="label_25">
+            <property name="text">
+             <string>Supply temperature (℃)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="label_21">
+            <property name="text">
+             <string>10L3</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QLabel" name="label_22">
+            <property name="text">
+             <string>Control mode</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_26">
+            <property name="text">
+             <string>10S123</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QSpinBox" name="STset_10L3">
+            <property name="minimum">
+             <number>15</number>
+            </property>
+            <property name="maximum">
+             <number>45</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="label_23">
+            <property name="text">
+             <string>min. : 10℃ max.: 50℃</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_24">
+            <property name="text">
+             <string>10L1</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="2">
+           <widget class="QComboBox" name="CM_10L3">
+            <item>
+             <property name="text">
+              <string comment="0">Off</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="1">Auto</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="10">Reset</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="20">Manual</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_28">
+            <property name="text">
+             <string>Zone11_Side wall</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QSpinBox" name="STset_10L1">
+            <property name="minimum">
+             <number>15</number>
+            </property>
+            <property name="maximum">
+             <number>45</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QComboBox" name="CM_10L1">
+            <item>
+             <property name="text">
+              <string comment="0">Off</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="1">Auto</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="10">Reset</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="20">Manual</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QComboBox" name="CM_10X1">
+            <item>
+             <property name="text">
+              <string comment="0">Off</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="1">Auto</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="10">Reset</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="20">Manual</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QSpinBox" name="STset_10S123">
+            <property name="minimum">
+             <number>15</number>
+            </property>
+            <property name="maximum">
+             <number>45</number>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="2">
+           <widget class="QComboBox" name="CM_10L2">
+            <item>
+             <property name="text">
+              <string comment="0">Off</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="1">Auto</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="10">Reset</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="20">Manual</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="QComboBox" name="CM_10S123">
+            <item>
+             <property name="text">
+              <string comment="0">Off</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="1">Auto</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="10">Reset</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="20">Manual</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_20">
+            <property name="text">
+             <string>10L2</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QPushButton" name="bt_write_floor">
+            <property name="text">
+             <string>Write Value</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>Zone11_FrontWall</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="0" column="0">
+         <layout class="QGridLayout" name="Zone11_FW">
+          <item row="6" column="2">
+           <widget class="QComboBox" name="CM_1150">
+            <item>
+             <property name="text">
+              <string comment="0">Off</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="1">Auto</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="10">Reset</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="20">Manual</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QComboBox" name="CM_1110">
+            <item>
+             <property name="text">
+              <string comment="0">Off</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="1">Auto</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="10">Reset</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="20">Manual</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QLabel" name="label_4">
+            <property name="text">
+             <string>Control mode</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="2">
+           <widget class="QComboBox" name="CM_1130">
+            <item>
+             <property name="text">
+              <string comment="0">Off</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="1">Auto</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="10">Reset</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="20">Manual</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>Supply temperature (℃)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="2">
+           <widget class="QComboBox" name="CM_1140">
+            <item>
+             <property name="text">
+              <string comment="0">Off</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="1">Auto</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="10">Reset</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="20">Manual</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>min. : 10℃ max.: 50℃</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="QComboBox" name="CM_1120">
+            <item>
+             <property name="text">
+              <string comment="0">Off</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="1">Auto</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="10">Reset</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="20">Manual</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="7" column="2">
+           <widget class="QComboBox" name="CM_1160">
+            <item>
+             <property name="text">
+              <string comment="0">Off</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="1">Auto</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="10">Reset</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="20">Manual</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QComboBox" name="CM_11XX">
+            <item>
+             <property name="text">
+              <string comment="0">Off</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="1">Auto</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="10">Reset</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="20">Manual</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_5">
+            <property name="text">
+             <string>1110</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_6">
+            <property name="text">
+             <string>1120</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_7">
+            <property name="text">
+             <string>1130</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="label_8">
+            <property name="text">
+             <string>1140</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="label_9">
+            <property name="text">
+             <string>1150</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0">
+           <widget class="QLabel" name="label_10">
+            <property name="text">
+             <string>1160</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QSpinBox" name="STset_1110">
+            <property name="minimum">
+             <number>15</number>
+            </property>
+            <property name="maximum">
+             <number>45</number>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QSpinBox" name="STset_1120">
+            <property name="minimum">
+             <number>15</number>
+            </property>
+            <property name="maximum">
+             <number>45</number>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QSpinBox" name="STset_1130">
+            <property name="minimum">
+             <number>15</number>
+            </property>
+            <property name="maximum">
+             <number>45</number>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QSpinBox" name="STset_1140">
+            <property name="minimum">
+             <number>15</number>
+            </property>
+            <property name="maximum">
+             <number>45</number>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="QSpinBox" name="STset_1150">
+            <property name="minimum">
+             <number>15</number>
+            </property>
+            <property name="maximum">
+             <number>45</number>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="1">
+           <widget class="QSpinBox" name="STset_1160">
+            <property name="minimum">
+             <number>15</number>
+            </property>
+            <property name="maximum">
+             <number>45</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>Zone11_Front wall</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QPushButton" name="bt_write_frontwall">
+            <property name="text">
+             <string>Write Value</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_3">
+       <attribute name="title">
+        <string>Zone11_SideWall</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0">
+         <layout class="QGridLayout" name="Zone11_SW">
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_17">
+            <property name="text">
+             <string>123A</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QSpinBox" name="STset_123A">
+            <property name="minimum">
+             <number>15</number>
+            </property>
+            <property name="maximum">
+             <number>45</number>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="2">
+           <widget class="QComboBox" name="CM_125A">
+            <item>
+             <property name="text">
+              <string comment="0">Off</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="1">Auto</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="10">Reset</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="20">Manual</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QSpinBox" name="STset_121A">
+            <property name="minimum">
+             <number>15</number>
+            </property>
+            <property name="maximum">
+             <number>45</number>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="label_18">
+            <property name="text">
+             <string>124A</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QLabel" name="label_11">
+            <property name="text">
+             <string>Control mode</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="label_13">
+            <property name="text">
+             <string>min. : 10℃ max.: 50℃</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QSpinBox" name="STset_122A">
+            <property name="minimum">
+             <number>15</number>
+            </property>
+            <property name="maximum">
+             <number>45</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QComboBox" name="CM_121A">
+            <item>
+             <property name="text">
+              <string comment="0">Off</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="1">Auto</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="10">Reset</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="20">Manual</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_15">
+            <property name="text">
+             <string>121A</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QSpinBox" name="STset_124A">
+            <property name="minimum">
+             <number>15</number>
+            </property>
+            <property name="maximum">
+             <number>45</number>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLabel" name="label_12">
+            <property name="text">
+             <string>Supply temperature (℃)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="QSpinBox" name="STset_125A">
+            <property name="minimum">
+             <number>15</number>
+            </property>
+            <property name="maximum">
+             <number>45</number>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="2">
+           <widget class="QComboBox" name="CM_123A">
+            <item>
+             <property name="text">
+              <string comment="0">Off</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="1">Auto</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="10">Reset</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="20">Manual</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QComboBox" name="CM_12XA">
+            <item>
+             <property name="text">
+              <string comment="0">Off</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="1">Auto</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="10">Reset</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="20">Manual</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_16">
+            <property name="text">
+             <string>122A</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="label_19">
+            <property name="text">
+             <string>125A</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="2">
+           <widget class="QComboBox" name="CM_124A">
+            <item>
+             <property name="text">
+              <string comment="0">Off</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="1">Auto</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="10">Reset</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="20">Manual</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="QComboBox" name="CM_122A">
+            <item>
+             <property name="text">
+              <string comment="0">Off</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="1">Auto</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="10">Reset</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string comment="20">Manual</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_14">
+            <property name="text">
+             <string>Zone11_Side wall</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QPushButton" name="bt_write_sidewall">
+            <property name="text">
+             <string>Write Value</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>443</width>
+     <height>24</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
