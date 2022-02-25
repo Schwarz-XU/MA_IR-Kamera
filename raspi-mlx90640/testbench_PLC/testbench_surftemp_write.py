@@ -1,3 +1,4 @@
+# testbench_surftemp_write.py
 import paho.mqtt.client as mqtt
 import time
 from datetime import datetime
@@ -43,26 +44,12 @@ def plc_write(plc, queue, var_address, var_type):
     else:
         print(f"{queue} is empty")
 
-class CalMeanVar():
-    def __init__(self):
-        self.count = 0
-        self.A = 0
-        self.A_ = 0
-
-    def cal(self, data):
-        self.count += 1
-        if self.count == 1:
-            self.A_ = data
-            self.A = data
-            return
-        self.A_ = self.A
-        self.A = self.A + (data - self.A) / self.count
-
 
 def subscribe(client: mqtt):
     plc = pyads.Connection(plc_address, plc_port)
     plc.open()
     print(plc)
+
     def on_message(client, userdata, msg):
         global temperature_array
         payload = msg.payload
@@ -93,7 +80,7 @@ def subscribe(client: mqtt):
                 temp_1121 = temperature_array[11][21]
                 temp_1124 = temperature_array[11][24]
                 temp_11_arv = np.average([temp_1115, temp_1118, temp_1121, temp_1124])
-                temp_1150_arv =np.average([temp_7_arv, temp_9_arv, temp_11_arv])
+                temp_1150_arv = np.average([temp_7_arv, temp_9_arv, temp_11_arv])
 
             print(temp_1150_arv)
             plc.write_by_name("GVL_WtrSupCC.stZone11_PanelSup[8].fSurfTempAct", temp_1150_arv, pyads.PLCTYPE_REAL)
