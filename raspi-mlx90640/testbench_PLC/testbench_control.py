@@ -5,7 +5,8 @@ from queue import Queue
 
 plc_address = "5.78.127.222.1.1"
 plc_port = 851
-broker_address = "mqtt.eclipseprojects.io"
+# broker_address = "mqtt.eclipseprojects.io"
+broker_address = "broker.emqx.io"
 broker_port = 1883
 
 # var. names set
@@ -68,9 +69,9 @@ def on_connect(client, userdata, flags, rc):
     client.subscribe("Rkl/WtrSup/zone11/sec_hw/fPumpPowerSetMan")
 
     # wall
-    client.subscribe("Rkl/WtrSup/zone11/wall_10XX/eCtrlMode")
+    client.subscribe("Rkl/WtrSup/zone11/wall_10X1/eCtrlMode")
     client.subscribe("Rkl/WtrSup/zone11/wall_11XX/eCtrlMode")
-    client.subscribe("Rkl/WtrSup/zone11/wall_12XX/eCtrlMode")
+    client.subscribe("Rkl/WtrSup/zone11/wall_12XA/eCtrlMode")
     # panel
     for j in range(0, 15):
         client.subscribe("Rkl/WtrSup/zone11/panel_{nPanelIndex}/eCtrlMode".format(nPanelIndex=j))
@@ -127,11 +128,11 @@ def on_message(client, userdata, msg):
     elif topic == "Rkl/WtrSup/zone11/sec_hw/fPumpPowerSetMan":
         sec_fPumpPowerSetMan_dic["CW"].put(float(payload))
     # wall
-    elif topic == "Rkl/WtrSup/zone11/wall_10XX/eCtrlMode":
+    elif topic == "Rkl/WtrSup/zone11/wall_10X1/eCtrlMode":
         wall_eCtrlMode_dic["Wall_10XX"].put(int(payload))
     elif topic == "Rkl/WtrSup/zone11/wall_11XX/eCtrlMode":
         wall_eCtrlMode_dic["Wall_11XX"].put(int(payload))
-    elif topic == "Rkl/WtrSup/zone11/wall_12XX/eCtrlMode":
+    elif topic == "Rkl/WtrSup/zone11/wall_12XA/eCtrlMode":
         wall_eCtrlMode_dic["Wall_12XX"].put(int(payload))
     else:
         for k in range(0, 15):
@@ -145,8 +146,8 @@ def on_message(client, userdata, msg):
                 panel_b6WValveActivateMan_dic["b6WValveActivateMan_" + str(k)].put(bool(payload))
             elif topic == "Rkl/WtrSup/zone11/panel_{nPanelIndex}/bPumpActivateMan".format(nPanelIndex=k):
                 panel_bPumpActivateMan_dic["bPumpActivateMan_" + str(k)].put(bool(payload))
-            else:
-                print("waiting for message from broker")
+            #else:
+            #    print("waiting for message from broker")
 
 
 # TODO: Version 1 of write into plc
@@ -158,9 +159,9 @@ def plc_write(my_plc):
             my_plc.write_by_name("GVL_WtrSupCC.stZone11_PanelSup[{panel_index}].eCtrlMode".format(panel_index=index),
                                  panel_eCtrlMode_dic["eCtrlMode_" + str(index)].get_nowait(),
                                  pyads.PLCTYPE_INT)
-            print(
-                my_plc.read_by_name("GVL_WtrSupCC.stZone11_PanelSup[{panel_index}].eCtrlMode".format(panel_index=index),
-                                    pyads.PLCTYPE_INT))
+            print(my_plc.read_by_name(
+                "GVL_WtrSupCC.stZone11_PanelSup[{panel_index}].eCtrlMode".format(panel_index=index),
+                pyads.PLCTYPE_INT))
         if not panel_fSupTempSet_dic["fSupTempSet_" + str(index)].empty():
             my_plc.write_by_name("GVL_WtrSupCC.stZone11_PanelSup[{panel_index}].fSupTempSet".format(panel_index=index),
                                  panel_eCtrlMode_dic["fSupTempSet_" + str(index)].get_nowait(),
@@ -204,15 +205,13 @@ def write_plc(plc, queue, data_address, data_type):
 def run():
     plc = pyads.Connection(plc_address, plc_port)
     plc.open()
+    client = mqtt.Client(clean_session=True)
+    client.on_connect = on_connect
     try:
-        client = mqtt.Client(clean_session=True)
-        client.on_connect = on_connect
         client.on_message = on_message
         client.connect(broker_address, broker_port, 60)
         client.loop_start()
-        for pri_index in range(1, 2):
-            write_plc(plc, pri_eCtrlMode_dic["CW"], "GVL_WtrSupPri.stWtrSupPri[1].eCtrlMode", pyads.PLCTYPE_INT)
-
+        write_plc(plc, panel_eCtrlMode_dic["eCtrlMode_4"], "GVL_WtrSupPri.stWtrSupPri[4].eCtrlMode", pyads.PLCTYPE_INT)
         # plc_write(plc)
     except Exception as e:
         print(repr(e))
