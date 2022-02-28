@@ -12,6 +12,11 @@ def write_csv():
     sub.run()
     temperature_array = sub.temperature_array
     temperature_list = sub.temperature_list_str
+    position_list = []
+    # initial positions of the pixels, add them to headers
+    for i in range(0, np.shape(temperature_array)[0]):
+        for j in range(0, np.shape(temperature_array)[1]):
+            position_list.append("pos_{i}_{j}".format(i=i, j=j))
     # write the temperature data into a .csv file
     file_path = os.path.abspath("../Data")
     with open(file_path + "/temperature_data.csv", "a", newline="") as file:
@@ -21,11 +26,6 @@ def write_csv():
         now = datetime.now()  # get current date and time
         current_date = now.strftime("%Y-%m-%d")
         current_time = now.strftime("%H:%M:%S")
-        # initial positions of the pixels, add them to headers
-        position_list = []
-        for i in range(0, np.shape(temperature_array)[0]):
-            for j in range(0, np.shape(temperature_array)[1]):
-                position_list.append("pos_{i}_{j}".format(i=i, j=j))
         # set headers
         headers = ["Date", "Time"] + position_list
         write_data = [current_date] + [current_time] + temperature_list
