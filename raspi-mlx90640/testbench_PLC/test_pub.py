@@ -10,9 +10,10 @@ broker_port = 1883
 
 # var. names set
 # 0-14=panel, 15=sec. cw, 16=sec. hw, 17=pri. hw, 18=pri. cw
-# pos.1=Var. address, pos.2=Publish topic, pos.3=Var. type
+# pos.0=Var. address, pos.1=Publish topic, pos.2=Var. type
+
 for i in range(15):
-    eCtrlState_dic = {f"eCtrlMode_{i}": [f"GVL_WtrSupCC.stZone11_PanelSup[{i}].eCtrlState",
+    eCtrlState_dic = {f"eCtrlState_{i}": [f"GVL_WtrSupCC.stZone11_PanelSup[{i}].eCtrlState",
                                          f"Rkl/WtrSup/zone11/panel_{i}/eCtrlState", pyads.PLCTYPE_INT]}
     fSupTempAct_dic = {f"fSupTempAct_{i}": [f"GVL_WtrSupCC.stZone11_PanelSup[{i}].fSupTempAct",
                                             f"Rkl/WtrSup/zone11/panel_{i}/fSupTempAct", pyads.PLCTYPE_REAL]}
@@ -25,7 +26,8 @@ for i in range(15):
     bPumpActivated_dic = {f"bPumpActivated_{i}": [f"GVL_WtrSupCC.stZone11_PanelSup[{i}].bPumpActivated",
                                                   f"Rkl/WtrSup/zone11/panel_{i}/bPumpActivated", pyads.PLCTYPE_BOOL]}
     b6WValveActivated_dic = {f"bPumpActivated_{i}": [f"GVL_WtrSupCC.stZone11_PanelSup[{i}].bPumpActivated",
-                                                     f"Rkl/WtrSup/zone11/panel_{i}/b6WValveActivated", pyads.PLCTYPE_BOOL]}
+                                                     f"Rkl/WtrSup/zone11/panel_{i}/b6WValveActivated",
+                                                     pyads.PLCTYPE_BOOL]}
 for j in range(15, 19):
     fCircSupTempAct_dic = {f"fCircSupTempAct_{i}": [f"GVL_WtrSupCC.stZone11_SecSup[{j}].fCircSupTempAct",
                                                     f"Rkl/WtrSup/zone11/sec_{j}/fCircSupTempAct", pyads.PLCTYPE_REAL]}
@@ -39,6 +41,11 @@ for j in range(15, 19):
                                                 f"Rkl/WtrSup/zone11/sec_{j}/fPumpPowerSet", pyads.PLCTYPE_REAL]}
     fValveOpenSet_dic = {f"fValveOpenSet_{i}": [f"GVL_WtrSupCC.stZone11_SecSup[{j}].fValveOpenSet",
                                                 f"Rkl/WtrSup/zone11/sec_{j}/fValveOpenSet", pyads.PLCTYPE_REAL]}
+
+panel_vars_list = [eCtrlState_dic, fSupTempAct_dic, fRtnTempAct_dic, fFlowrateAct_dic, f2WValveOpenSet_dic,
+                   bPumpActivated_dic, b6WValveActivated_dic, fCircSupTempAct_dic]
+sup_vars_list = [fCircSupTempAct_dic, fCircRtnTempAct_dic, fMainSupTempAct_dic, fMainRtnTempAct_dic,
+                 fPumpPowerSet_dic, fValveOpenSet_dic]
 
 
 # publisher
@@ -62,15 +69,16 @@ def publish(plc_address, plc_port):
             # establish connection
             client = mqtt.Client()
             client.on_connect = on_connect
-            client.will_set("Rkl/testbench_pub/status", b'{"status": "off"}', retain=True)  # Set will to find the status of publisher
+            client.will_set("Rkl/testbench_pub/status", b'{"status": "off"}',
+                            retain=True)  # Set will to find the status of publisher
             client.connect(broker_address, broker_port, 60)
             # read data from plc via. pyads, publish to the MQTT broker
             # Zone 11
             # Panel data
             # now1 = datetime.now()
-            for i in range(0, 15):
-                eCtrlState = str(plc.read_by_name("GVL_WtrSupCC.stZone11_PanelSup[{nPanelIndex}].eCtrlState"
-                                                  .format(nPanelIndex=i), pyads.PLCTYPE_INT))
+            for k in range(0, 15):
+                eCtrlState = plc.read_by_name(panel_vars_list[0][f"eCtrlState_{k}"][0],
+                                              eCtrlState_dic[f"eCtrlState_{k}"][2])
                 fSupTempAct = str(plc.read_by_name("GVL_WtrSupCC.stZone11_PanelSup[{nPanelIndex}].fSupTempAct"
                                                    .format(nPanelIndex=i), pyads.PLCTYPE_REAL))
                 fRtnTempAct = str(plc.read_by_name("GVL_WtrSupCC.stZone11_PanelSup[{nPanelIndex}].fRtnTempAct"
@@ -89,7 +97,7 @@ def publish(plc_address, plc_port):
                                                  .format(nPanelIndex=i), pyads.PLCTYPE_BOOL))
                 bHWSupReq = str(plc.read_by_name("GVL_WtrSupCC.stZone11_PanelSup[{nPanelIndex}].bHWSupReq"
                                                  .format(nPanelIndex=i), pyads.PLCTYPE_BOOL))
-                
+
                 client.publish('Rkl/WtrSup/zone11/panel_{nPanelIndex}/eCtrlState'.format(nPanelIndex=i),
                                payload=eCtrlState, qos=0, retain=False)
                 client.publish('Rkl/WtrSup/zone11/panel_{nPanelIndex}/fSupTempAct'.format(nPanelIndex=i),
@@ -108,8 +116,7 @@ def publish(plc_address, plc_port):
                                payload=bCWSupReq, qos=0, retain=False)
                 client.publish('Rkl/WtrSup/zone11/panel_{nPanelIndex}/bHWSupReq'.format(nPanelIndex=i),
                                payload=bHWSupReq, qos=0, retain=False)
-                
-            
+
             # Secondary side data
             # get data
             for j in range(15, 17):
@@ -132,7 +139,7 @@ def publish(plc_address, plc_port):
                     sec_name = "CW"
                 else:
                     sec_name = "HW"
-                
+
                 client.publish('Rkl/WtrSup/zone11/sec_{nSecSysIndex}/fCircSupTempAct'.format(nSecSysIndex=sec_name),
                                payload=fSecCircSupTempAct, qos=0, retain=False)
                 client.publish('Rkl/WtrSup/zone11/sec_{nSecSysIndex}/fCircRtnTempAct'.format(nSecSysIndex=sec_name),
@@ -145,7 +152,7 @@ def publish(plc_address, plc_port):
                                payload=fSecValveOpenSet, qos=0, retain=False)
                 client.publish('Rkl/WtrSup/zone11/sec_{nSecSysIndex}/fPumpPowerSet'.format(nSecSysIndex=sec_name),
                                payload=fSecPumpPowerSet, qos=0, retain=False)
-            
+
             # Primary side data
             # get data
             # 1=HW, 2=CW
@@ -159,8 +166,8 @@ def publish(plc_address, plc_port):
                 fPriMainRtnTempAct = str(plc.read_by_name("GVL_WtrSupPri.stWtrSupPri[{nPriSysIndex}].fMainRtnTempAct"
                                                           .format(nPriSysIndex=k), pyads.PLCTYPE_REAL))
                 fPriValveOpenSet = str(plc.read_by_name("GVL_WtrSupPri.stWtrSupPri[{nPriSysIndex}].fMixingValveOpenSet"
-                                                       .format(nPriSysIndex=k), pyads.PLCTYPE_REAL))
-                
+                                                        .format(nPriSysIndex=k), pyads.PLCTYPE_REAL))
+
                 # publish data to broker
                 if k == 1:
                     pri_name = "HW"
