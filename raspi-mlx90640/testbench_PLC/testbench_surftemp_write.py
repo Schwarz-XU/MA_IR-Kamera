@@ -104,7 +104,7 @@ def subscribe(client: mqtt):
                 temp_1124 = temperature_array[11][24]
                 temp_11_arv = np.average([temp_1115, temp_1118, temp_1121, temp_1124])
                 temp_1150_arv = np.average([temp_7_arv, temp_9_arv, temp_11_arv])
-                temp_1150_arv_10 = value_moving_avg(temp_1150_arv, 10, 0.4).mov_avg()  # current frame rate < 4.0 fps
+                #temp_1150_arv_10 = value_moving_avg(temp_1150_arv, 10, 0.4).mov_avg()  # current frame rate < 4.0 fps
                 '''
                 # Panel 1160
                 temp_315 = temperature_array[3][15]
@@ -119,8 +119,8 @@ def subscribe(client: mqtt):
                 temp_4_arv = np.average([temp_415, temp_418, temp_421, temp_424])
                 temp_1160_arv = np.average([temp_3_arv, temp_4_arv])
                 '''
-            plc.write_by_name("PRG_WtrSupCC_Zone11.fbPanelSupCtrl.fSurfTempAct", temp_1150_arv_10, pyads.PLCTYPE_REAL)
-            plc.write_by_name("GVL_WtrSupCC.stZone11_PanelSup[8].fSurfTempAct", temp_1150_arv_10, pyads.PLCTYPE_REAL)
+            plc.write_by_name("PRG_WtrSupCC_Zone11.fbPanelSupCtrl[8].fSurfTempAct", temp_1150_arv, pyads.PLCTYPE_REAL)
+            #plc.write_by_name("GVL_WtrSupCC.stZone11_PanelSup[8].fSurfTempAct", temp_1150_arv_10, pyads.PLCTYPE_REAL)
     client.subscribe("raspberry/temperature_array")
     client.on_message = on_message
 

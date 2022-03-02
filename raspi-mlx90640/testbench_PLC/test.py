@@ -3,7 +3,7 @@ import paho.mqtt.client as mqtt
 import pyads
 from queue import Queue
 
-start = time.perf_counter()
+# start = time.perf_counter()
 [eCtrlState_dic, fSupTempAct_dic, fRtnTempAct_dic, fRtnTempAct_dic, fFlowrateAct_dic, f2WValveOpenSet_dic,
  bPumpActivated_dic, b6WValveActivated_dic, fCircSupTempAct_dic, fCircRtnTempAct_dic, fMainSupTempAct_dic,
  fMainRtnTempAct_dic, fPumpPowerSet_dic, fValveOpenSet_dic] = [dict(), dict(), dict(), dict(), dict(), dict(), dict(),
@@ -64,8 +64,8 @@ connected = False
 message_received = False
 broker_address = "broker.emqx.io"
 broker_port = 1883
-plc_address = "5.78.127.222.1.1"
-plc_port = 851
+# plc_address = "5.78.127.222.1.1"
+# plc_port = 851
 
 
 def on_connect(client, userdata, flags, rc):
@@ -80,23 +80,22 @@ def on_connect(client, userdata, flags, rc):
 client = mqtt.Client()
 client.connect(broker_address, broker_port, 80)
 client.on_connect = on_connect
-plc = pyads.Connection(plc_address, plc_port)
-plc.open()
+# plc = pyads.Connection(plc_address, plc_port)
+# plc.open()
 
 while not connected:
     time.sleep(0.05)
-while not message_received:
-    time.sleep(0.05)
+
+# panel data published
 
 for ii in range(7):
     for jj in range(15):
-        panel_vars_list[ii][panel_names_list[ii] + f"{jj}"][3].put(
-            plc.read_by_name(panel_vars_list[ii][panel_names_list[ii] + f"{jj}"][0],
-                             panel_vars_list[ii][panel_names_list[ii] + f"{jj}"][1])
+        panel_vars_list[ii][panel_names_list[ii] + f"{jj}"][3].put(1
+        #     # plc.read_by_name(panel_vars_list[ii][panel_names_list[ii] + f"{jj}"][0],
+        #     #                  panel_vars_list[ii][panel_names_list[ii] + f"{jj}"][1])
         )
-        client.publish(panel_vars_list[ii][panel_names_list[ii] + f"{jj}"][2],
+        client.publish(panel_vars_list[ii][panel_names_list[ii] + f"{jj}"][1],
                        panel_vars_list[ii][panel_names_list[ii] + f"{jj}"][3].get())
-
-end = time.perf_counter()
-
-print(end - start)
+# end = time.perf_counter()
+#
+# print(end - start)

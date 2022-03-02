@@ -5,7 +5,7 @@ from datetime import datetime
 
 plc_address = "5.78.127.222.1.1"
 plc_port = 851
-broker_address = "mqtt.eclipseprojects.io"
+broker_address = "broker.emqx.io"
 broker_port = 1883
 
 # var. names set
