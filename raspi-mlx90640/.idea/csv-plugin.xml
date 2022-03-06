@@ -3,6 +3,34 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
+        <entry key="/Data/0223_1525_surf_temp_1150.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/Data/0223_1635_surf_temp_1150.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/Data/SurfTemp_1150_20-40.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/Data/surf_temp_1150.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/Data/temperature_data.csv">
           <value>
             <Attribute>
@@ -11,13 +39,6 @@
           </value>
         </entry>
         <entry key="/DataProcessing/data.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="/testbench_PLC/0223_1525_surf_temp_1150.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
