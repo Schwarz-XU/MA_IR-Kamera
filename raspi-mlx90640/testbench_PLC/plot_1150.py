@@ -21,7 +21,7 @@ temp_11_arv = []
 temp_1150_arv = []
 
 now = str(datetime.now().strftime("%m%d_%H%M"))
-file_name = "0223_1635_surf_temp_1150.csv"
+file_name = "../Data/0223_1635_surf_temp_1150.csv"
 with open(file_name, 'r') as csvfile:
     plots = csv.reader(csvfile, delimiter=',')
     for row in plots:
