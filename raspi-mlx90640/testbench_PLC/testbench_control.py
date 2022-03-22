@@ -5,7 +5,7 @@ from queue import Queue
 
 plc_address = "5.78.127.222.1.1"
 plc_port = 851
-broker_address = "mqtt.eclipseprojects.io"
+broker_address = "broker.emqx.io"
 broker_port = 1883
 
 # var. names set
@@ -22,7 +22,7 @@ sec_fValveOpenSetMan_dic = {"CW": Queue(), "HW": Queue()}
 sec_fPumpPowerSetMan_dic = {"CW": Queue(), "HW": Queue()}
 
 # wall
-wall_eCtrlMode_dic = {"Wall_10XX": Queue(), "Wall_11XX": Queue(), "Wall_12XX": Queue()}
+wall_eCtrlMode_dic = {"Wall_10XX": Queue(), "Wall_11XX": Queue(), "Wall_12XA": Queue()}
 # panel
 panel_eCtrlMode_dic = {}
 panel_fSupTempSet_dic = {}
@@ -70,7 +70,7 @@ def on_connect(client, userdata, flags, rc):
     # wall
     client.subscribe("Rkl/WtrSup/zone11/wall_10XX/eCtrlMode")
     client.subscribe("Rkl/WtrSup/zone11/wall_11XX/eCtrlMode")
-    client.subscribe("Rkl/WtrSup/zone11/wall_12XX/eCtrlMode")
+    client.subscribe("Rkl/WtrSup/zone11/wall_12XA/eCtrlMode")
     # panel
     for j in range(0, 15):
         client.subscribe("Rkl/WtrSup/zone11/panel_{nPanelIndex}/eCtrlMode".format(nPanelIndex=j))
@@ -131,8 +131,8 @@ def on_message(client, userdata, msg):
         wall_eCtrlMode_dic["Wall_10XX"].put(int(payload))
     elif topic == "Rkl/WtrSup/zone11/wall_11XX/eCtrlMode":
         wall_eCtrlMode_dic["Wall_11XX"].put(int(payload))
-    elif topic == "Rkl/WtrSup/zone11/wall_12XX/eCtrlMode":
-        wall_eCtrlMode_dic["Wall_12XX"].put(int(payload))
+    elif topic == "Rkl/WtrSup/zone11/wall_12XA/eCtrlMode":
+        wall_eCtrlMode_dic["Wall_12XA"].put(int(payload))
     else:
         for k in range(0, 15):
             if topic == "Rkl/WtrSup/zone11/panel_{nPanelIndex}/eCtrlMode".format(nPanelIndex=k):
@@ -148,51 +148,60 @@ def on_message(client, userdata, msg):
             else:
                 print("waiting for message from broker")
 
-
-# TODO: Version 1 of write into plc
-def plc_write(my_plc):
-    # Zone 11
-    # Panel control parameter write via. pyads
-    for index in range(0, 15):
-        if not panel_eCtrlMode_dic["eCtrlMode_" + str(index)].empty():
-            my_plc.write_by_name("GVL_WtrSupCC.stZone11_PanelSup[{panel_index}].eCtrlMode".format(panel_index=index),
-                                 panel_eCtrlMode_dic["eCtrlMode_" + str(index)].get_nowait(),
-                                 pyads.PLCTYPE_INT)
-            print(
-                my_plc.read_by_name("GVL_WtrSupCC.stZone11_PanelSup[{panel_index}].eCtrlMode".format(panel_index=index),
-                                    pyads.PLCTYPE_INT))
-        if not panel_fSupTempSet_dic["fSupTempSet_" + str(index)].empty():
-            my_plc.write_by_name("GVL_WtrSupCC.stZone11_PanelSup[{panel_index}].fSupTempSet".format(panel_index=index),
-                                 panel_eCtrlMode_dic["fSupTempSet_" + str(index)].get_nowait(),
-                                 pyads.PLCTYPE_REAL)
-            print(my_plc.read_by_name(
-                "GVL_WtrSupCC.stZone11_PanelSup[{panel_index}].fSupTempSet".format(panel_index=index),
-                pyads.PLCTYPE_REAL))
-        if not panel_f2WValveOpenSetMan_dic["f2WValveOpenSetMan_" + str(index)].empty():
-            my_plc.write_by_name(
-                "GVL_WtrSupCC.stZone11_PanelSup[{panel_index}].f2WValveOpenSetMan".format(panel_index=index),
-                panel_eCtrlMode_dic["f2WValveOpenSetMan_" + str(index)].get_nowait(),
-                pyads.PLCTYPE_REAL)
-            print(my_plc.read_by_name(
-                "GVL_WtrSupCC.stZone11_PanelSup[{panel_index}].f2WValveOpenSetMan".format(panel_index=index),
-                pyads.PLCTYPE_REAL))
-        if not panel_b6WValveActivateMan_dic["b6WValveActivateMan_" + str(index)].empty():
-            my_plc.write_by_name(
-                "GVL_WtrSupCC.stZone11_PanelSup[{panel_index}].b6WValveActivateMan".format(panel_index=index),
-                panel_eCtrlMode_dic["b6WValveActivateMan_" + str(index)].get_nowait(),
-                pyads.PLCTYPE_BOOL)
-            print(my_plc.read_by_name(
-                "GVL_WtrSupCC.stZone11_PanelSup[{panel_index}].b6WValveActivateMan".format(panel_index=index),
-                pyads.PLCTYPE_BOOL))
-        if not panel_bPumpActivateMan_dic["bPumpActivateMan_" + str(index)].empty():
-            my_plc.write_by_name(
-                "GVL_WtrSupCC.stZone11_PanelSup[{panel_index}].bPumpActivateMan".format(panel_index=index),
-                panel_eCtrlMode_dic["bPumpActivateMan_" + str(index)].get_nowait(),
-                pyads.PLCTYPE_BOOL)
-            print(my_plc.read_by_name(
-                "GVL_WtrSupCC.stZone11_PanelSup[{panel_index}].bPumpActivateMan".format(panel_index=index),
-                pyads.PLCTYPE_BOOL))
-
+   
+    # TODO: Version 1 of write into plc
+    def plc_write(my_plc):
+        # Zone 11
+        if not wall_eCtrlMode_dic["Wall_10XX"].empty():
+            my_plc.write_by_name("GVL_WtrSupCC.eCtrlMode_Zone11_10XX", int(wall_eCtrlMode_dic["Wall_10XX"].get()),pyads.PLCTYPE_INT)
+        if not wall_eCtrlMode_dic["Wall_11XX"].empty():
+            my_plc.write_by_name("GVL_WtrSupCC.eCtrlMode_Zone11_11XX", int(wall_eCtrlMode_dic["Wall_11XX"].get()),pyads.PLCTYPE_INT)
+        if not wall_eCtrlMode_dic["Wall_12XA"].empty():
+            my_plc.write_by_name("GVL_WtrSupCC.eCtrlMode_Zone11_12XA", int(wall_eCtrlMode_dic["Wall_12XA"].get()),pyads.PLCTYPE_INT)
+        # Panel control parameter write via. pyads
+        for index in range(0, 15):
+            if not panel_eCtrlMode_dic["eCtrlMode_" + str(index)].empty():
+                my_plc.write_by_name("GVL_WtrSupCC.stZone11_PanelSup[{panel_index}].eCtrlMode".format(panel_index=index),
+                                     int(panel_eCtrlMode_dic["eCtrlMode_" + str(index)].get()),
+                                     pyads.PLCTYPE_INT)
+                print(
+                    my_plc.read_by_name("GVL_WtrSupCC.stZone11_PanelSup[{panel_index}].eCtrlMode".format(panel_index=index),
+                                        pyads.PLCTYPE_INT))
+            if not panel_fSupTempSet_dic["fSupTempSet_" + str(index)].empty():
+                my_plc.write_by_name("GVL_WtrSupCC.stZone11_PanelSup[{panel_index}].fSupTempSet".format(panel_index=index),
+                                     float(panel_eCtrlMode_dic["fSupTempSet_" + str(index)].get_nowait()),
+                                     pyads.PLCTYPE_REAL)
+                print(my_plc.read_by_name(
+                    "GVL_WtrSupCC.stZone11_PanelSup[{panel_index}].fSupTempSet".format(panel_index=index),
+                    pyads.PLCTYPE_REAL))
+            if not panel_f2WValveOpenSetMan_dic["f2WValveOpenSetMan_" + str(index)].empty():
+                my_plc.write_by_name(
+                    "GVL_WtrSupCC.stZone11_PanelSup[{panel_index}].f2WValveOpenSetMan".format(panel_index=index),
+                    float(panel_eCtrlMode_dic["f2WValveOpenSetMan_" + str(index)].get_nowait()),
+                    pyads.PLCTYPE_REAL)
+                print(my_plc.read_by_name(
+                    "GVL_WtrSupCC.stZone11_PanelSup[{panel_index}].f2WValveOpenSetMan".format(panel_index=index),
+                    pyads.PLCTYPE_REAL))
+            if not panel_b6WValveActivateMan_dic["b6WValveActivateMan_" + str(index)].empty():
+                my_plc.write_by_name(
+                    "GVL_WtrSupCC.stZone11_PanelSup[{panel_index}].b6WValveActivateMan".format(panel_index=index),
+                    bool(panel_eCtrlMode_dic["b6WValveActivateMan_" + str(index)].get_nowait()),
+                    pyads.PLCTYPE_BOOL)
+                print(my_plc.read_by_name(
+                    "GVL_WtrSupCC.stZone11_PanelSup[{panel_index}].b6WValveActivateMan".format(panel_index=index),
+                    pyads.PLCTYPE_BOOL))
+            if not panel_bPumpActivateMan_dic["bPumpActivateMan_" + str(index)].empty():
+                my_plc.write_by_name(
+                    "GVL_WtrSupCC.stZone11_PanelSup[{panel_index}].bPumpActivateMan".format(panel_index=index),
+                    bool(panel_eCtrlMode_dic["bPumpActivateMan_" + str(index)].get_nowait()),
+                    pyads.PLCTYPE_BOOL)
+                print(my_plc.read_by_name(
+                    "GVL_WtrSupCC.stZone11_PanelSup[{panel_index}].bPumpActivateMan".format(panel_index=index),
+                    pyads.PLCTYPE_BOOL))
+    plc = pyads.Connection(plc_address, plc_port)
+    plc.open()
+    plc_write(plc)
+    
 
 # TODO: Version 2 of write into PLC: use the following function
 def write_plc(plc, queue, data_address, data_type):
@@ -202,18 +211,12 @@ def write_plc(plc, queue, data_address, data_type):
 
 
 def run():
-    plc = pyads.Connection(plc_address, plc_port)
-    plc.open()
     try:
         client = mqtt.Client(clean_session=True)
         client.on_connect = on_connect
         client.on_message = on_message
         client.connect(broker_address, broker_port, 60)
         client.loop_start()
-        for pri_index in range(1, 2):
-            write_plc(plc, pri_eCtrlMode_dic["CW"], "GVL_WtrSupPri.stWtrSupPri[1].eCtrlMode", pyads.PLCTYPE_INT)
-
-        # plc_write(plc)
     except Exception as e:
         print(repr(e))
 
