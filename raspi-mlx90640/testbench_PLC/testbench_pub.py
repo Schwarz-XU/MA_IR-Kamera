@@ -137,7 +137,7 @@ def publish(plc_address, plc_port):
                 fPriMainRtnTempAct = str(plc.read_by_name("GVL_WtrSupPri.stWtrSupPri[{nPriSysIndex}].fMainRtnTempAct"
                                                           .format(nPriSysIndex=k), pyads.PLCTYPE_REAL))
                 fPriValveOpenSet = str(plc.read_by_name("GVL_WtrSupPri.stWtrSupPri[{nPriSysIndex}].fMixingValveOpenSet"
-                                                       .format(nPriSysIndex=k), pyads.PLCTYPE_REAL))
+                                                        .format(nPriSysIndex=k), pyads.PLCTYPE_REAL))
                 
                 # publish data to broker
                 if k == 1:

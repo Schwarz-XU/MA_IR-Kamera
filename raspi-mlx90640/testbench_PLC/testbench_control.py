@@ -162,14 +162,14 @@ def on_message(client, userdata, msg):
         for index in range(0, 15):
             if not panel_eCtrlMode_dic["eCtrlMode_" + str(index)].empty():
                 my_plc.write_by_name("GVL_WtrSupCC.stZone11_PanelSup[{panel_index}].eCtrlMode".format(panel_index=index),
-                                     int(panel_eCtrlMode_dic["eCtrlMode_" + str(index)].get()),
+                                     panel_eCtrlMode_dic["eCtrlMode_" + str(index)].get(),
                                      pyads.PLCTYPE_INT)
                 print(
                     my_plc.read_by_name("GVL_WtrSupCC.stZone11_PanelSup[{panel_index}].eCtrlMode".format(panel_index=index),
                                         pyads.PLCTYPE_INT))
             if not panel_fSupTempSet_dic["fSupTempSet_" + str(index)].empty():
                 my_plc.write_by_name("GVL_WtrSupCC.stZone11_PanelSup[{panel_index}].fSupTempSet".format(panel_index=index),
-                                     float(panel_eCtrlMode_dic["fSupTempSet_" + str(index)].get_nowait()),
+                                     panel_fSupTempSet_dic["fSupTempSet_" + str(index)].get_nowait(),
                                      pyads.PLCTYPE_REAL)
                 print(my_plc.read_by_name(
                     "GVL_WtrSupCC.stZone11_PanelSup[{panel_index}].fSupTempSet".format(panel_index=index),
@@ -177,7 +177,7 @@ def on_message(client, userdata, msg):
             if not panel_f2WValveOpenSetMan_dic["f2WValveOpenSetMan_" + str(index)].empty():
                 my_plc.write_by_name(
                     "GVL_WtrSupCC.stZone11_PanelSup[{panel_index}].f2WValveOpenSetMan".format(panel_index=index),
-                    float(panel_eCtrlMode_dic["f2WValveOpenSetMan_" + str(index)].get_nowait()),
+                    float(panel_f2WValveOpenSetMan_dic["f2WValveOpenSetMan_" + str(index)].get_nowait()),
                     pyads.PLCTYPE_REAL)
                 print(my_plc.read_by_name(
                     "GVL_WtrSupCC.stZone11_PanelSup[{panel_index}].f2WValveOpenSetMan".format(panel_index=index),
@@ -185,7 +185,7 @@ def on_message(client, userdata, msg):
             if not panel_b6WValveActivateMan_dic["b6WValveActivateMan_" + str(index)].empty():
                 my_plc.write_by_name(
                     "GVL_WtrSupCC.stZone11_PanelSup[{panel_index}].b6WValveActivateMan".format(panel_index=index),
-                    bool(panel_eCtrlMode_dic["b6WValveActivateMan_" + str(index)].get_nowait()),
+                    panel_b6WValveActivateMan_dic["b6WValveActivateMan_" + str(index)].get_nowait(),
                     pyads.PLCTYPE_BOOL)
                 print(my_plc.read_by_name(
                     "GVL_WtrSupCC.stZone11_PanelSup[{panel_index}].b6WValveActivateMan".format(panel_index=index),
@@ -193,7 +193,7 @@ def on_message(client, userdata, msg):
             if not panel_bPumpActivateMan_dic["bPumpActivateMan_" + str(index)].empty():
                 my_plc.write_by_name(
                     "GVL_WtrSupCC.stZone11_PanelSup[{panel_index}].bPumpActivateMan".format(panel_index=index),
-                    bool(panel_eCtrlMode_dic["bPumpActivateMan_" + str(index)].get_nowait()),
+                    panel_bPumpActivateMan_dic["bPumpActivateMan_" + str(index)].get_nowait(),
                     pyads.PLCTYPE_BOOL)
                 print(my_plc.read_by_name(
                     "GVL_WtrSupCC.stZone11_PanelSup[{panel_index}].bPumpActivateMan".format(panel_index=index),

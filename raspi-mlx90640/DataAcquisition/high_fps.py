@@ -12,6 +12,7 @@ from scipy import ndimage
 i2c = busio.I2C(board.SCL, board.SDA, frequency=1000000)  # setup I2C
 mlx = adafruit_mlx90640.MLX90640(i2c)  # begin MLX90640 with I2C comm
 mlx.refresh_rate = adafruit_mlx90640.RefreshRate.REFRESH_16_HZ  # set refresh rate
+mlx.GetTa
 # mlx90640 build
 mlx_shape = (24, 32)  # mlx90640 shape
 # mlx_interp_val = 10  # interpolate (on each dimension)
@@ -52,9 +53,8 @@ broker_address = "broker.emqx.io"
 broker_port = 1883
 # establish connection
 client = mqtt.Client()
-# client.username_pw_set(username="UEl-Rkl_Tm", password="12345678")  # TODO: not usable, need correction (A: need TSL/SSL)
 client.on_connect = on_connect
-client.will_set("raspberry/pub/status", b'{"status": "off"}', retain=True)  # Set will to find the status of publisher
+client.will_set("Rkl/raspberry/pub/status", b'{"status": "off"}', retain=True)  # Set will to find the status of publisher
 client.connect(broker_address, broker_port, 60)  # TODO: free server right now, replace it with institute's server later
 
 
