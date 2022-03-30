@@ -4,12 +4,21 @@ from datetime import datetime
 from DataAcquisition import sub
 
 # establish database in localhost
+
 db = mysql.connector.connect(
     host='localhost',
     user='root',
     passwd='Sql001601027@',
     database='rkl_temperature'
 )
+'''
+db = mysql.connector.connect(
+    host='uelrkl.cvquuhppqhkb.eu-central-1.rds.amazonaws.com',
+    user='admin',
+    passwd='uelrkl123456',
+    database='rkl_ir_temperature'
+)
+'''
 
 cursor = db.cursor()
 

@@ -10,4 +10,4 @@ db = mysql.connector.connect(
 )
 
 cursor = db.cursor()
-cursor.execute("CREATE DATABASE rkl_temperature")
+cursor.execute("CREATE DATABASE rkl_ir_temperature")

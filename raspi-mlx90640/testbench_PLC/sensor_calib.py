@@ -1,3 +1,4 @@
+# sensor_calib.py
 import paho.mqtt.client as mqtt
 import csv
 from datetime import datetime
@@ -18,7 +19,7 @@ def on_connect(client, userdata, flags, rc):
         print(f"Connected fail with code {rc}")
     client.subscribe("Rkl/WtrSup/zone11/test/pt1")
     client.subscribe("Rkl/WtrSup/zone11/test/pt2")
-    #client.subscribe("raspberry/temperature_array")
+    client.subscribe("Rkl/raspberry/temperature_array")
 
 
 def on_message(client, userdata, msg):
