@@ -90,7 +90,7 @@ client.connect(broker_address, broker_port)
 client.on_subscribe = on_subscribe
 client.on_message = on_message
 client.on_publish = on_publish
-client.will_set("raspberry/pub/status", b'{"status": "off"}', retain=True)
+client.will_set("Rkl/raspberry/pub/status", b'{"status": "off"}', retain=True)
 client.loop_forever()
 
 def run():

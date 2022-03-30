@@ -20,12 +20,14 @@ sudo i2cdetect -y 1
 """
 
 import sys, os
+# import Testbench_UI
 from DataAcquisition import high_fps
 # from DataAcquisition import mlx90640
 
 
 if __name__ == "__main__":
     sys.path.append(os.path.abspath("."))
-    print(os.path.abspath("."))
+    # Testbench_UI.run()
+    # print(os.path.abspath("."))
     # mlx90640.run()
     high_fps.run()  # for higher performance

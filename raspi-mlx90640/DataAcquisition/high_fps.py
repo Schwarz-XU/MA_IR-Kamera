@@ -52,9 +52,8 @@ broker_address = "broker.emqx.io"
 broker_port = 1883
 # establish connection
 client = mqtt.Client()
-# client.username_pw_set(username="UEl-Rkl_Tm", password="12345678")  # TODO: not usable, need correction (A: need TSL/SSL)
 client.on_connect = on_connect
-client.will_set("raspberry/pub/status", b'{"status": "off"}', retain=True)  # Set will to find the status of publisher
+client.will_set("Rkl/raspberry/pub/status", b'{"status": "off"}', retain=True)  # Set will to find the status of publisher
 client.connect(broker_address, broker_port, 60)  # TODO: free server right now, replace it with institute's server later
 
 
