@@ -1,6 +1,5 @@
 import time
 import numpy as np
-import random
 
 
 class value_moving_avg:
