@@ -12,7 +12,6 @@ from scipy import ndimage
 i2c = busio.I2C(board.SCL, board.SDA, frequency=1000000)  # setup I2C
 mlx = adafruit_mlx90640.MLX90640(i2c)  # begin MLX90640 with I2C comm
 mlx.refresh_rate = adafruit_mlx90640.RefreshRate.REFRESH_16_HZ  # set refresh rate
-mlx.GetTa
 # mlx90640 build
 mlx_shape = (24, 32)  # mlx90640 shape
 # mlx_interp_val = 10  # interpolate (on each dimension)

@@ -39,7 +39,7 @@ def write_csv():
         if file_is_empty:
             writer.writerow(headers)  # if the file is empty, then write the headers
         writer.writerows([write_data])
-    time.sleep(1)  # write data every 2 sec.
+    time.sleep(1)  # write data every 1 sec.
 
 
 def read_csv():

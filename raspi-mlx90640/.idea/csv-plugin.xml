@@ -10,13 +10,6 @@
             </Attribute>
           </value>
         </entry>
-        <entry key="/testbench_PLC/pt_data.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
       </map>
     </option>
   </component>
