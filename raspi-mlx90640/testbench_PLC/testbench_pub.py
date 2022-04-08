@@ -57,14 +57,24 @@ def plc_connect(address, port):
 
 def publish(plc_address, plc_port):
     plc = plc_connect(plc_address, plc_port)
-    while 1:
+    while True:
         try:
             # establish connection
             client = mqtt.Client()
             client.on_connect = on_connect
             client.will_set("Rkl/testbench_pub/status", b'{"status": "off"}', retain=True)  # Set will to find the status of publisher
             client.connect(broker_address, broker_port, 60)
+            # receive order from MQTT broker
+            client.subscribe("Rkl/WtrSup/zone11/eCtrlMode_10XX")
+            client.subscribe("Rkl/WtrSup/zone11/eCtrlMode_11XX")
+            client.subscribe("Rkl/WtrSup/zone11/eCtrlMode_12XA")
+            
             # read data from plc via. pyads, publish to the MQTT broker
+            # IR-Sensor calibration test
+            fPT1 = str(plc.read_by_name("PRG_WtrSupCC_Zone11.fCalibPT1", pyads.PLCTYPE_REAL))
+            fPT2 = str(plc.read_by_name("PRG_WtrSupCC_Zone11.fCalibPT2", pyads.PLCTYPE_REAL))
+            client.publish('Rkl/WtrSup/zone11/test/pt1', payload=fPT1, qos=0, retain=False)
+            client.publish('Rkl/WtrSup/zone11/test/pt2', payload=fPT2, qos=0, retain=False)
             # Zone 11
             # Panel data
             # now1 = datetime.now()
@@ -159,7 +169,7 @@ def publish(plc_address, plc_port):
                 fPriMainRtnTempAct = str(plc.read_by_name("GVL_WtrSupPri.stWtrSupPri[{nPriSysIndex}].fMainRtnTempAct"
                                                           .format(nPriSysIndex=k), pyads.PLCTYPE_REAL))
                 fPriValveOpenSet = str(plc.read_by_name("GVL_WtrSupPri.stWtrSupPri[{nPriSysIndex}].fMixingValveOpenSet"
-                                                       .format(nPriSysIndex=k), pyads.PLCTYPE_REAL))
+                                                        .format(nPriSysIndex=k), pyads.PLCTYPE_REAL))
                 
                 # publish data to broker
                 if k == 1:

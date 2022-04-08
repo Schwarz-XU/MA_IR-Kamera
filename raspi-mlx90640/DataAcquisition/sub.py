@@ -13,7 +13,7 @@ def on_connect(client, userdata, flags, rc):
     else:
         print(f"Connected fail with code {rc}")
     # print(f"Connected with result code {rc}")
-    client.subscribe("raspberry/temperature_array")  # sub the topic
+    client.subscribe("Rkl/raspberry/temperature_array")  # sub the topic
 
 
 payload = bytes()  # initial the payload var. as a empty bytes var.
@@ -45,7 +45,7 @@ def run():
     client = mqtt.Client(clean_session=True)
     client.on_connect = on_connect
     client.on_message = on_message
-    client.will_set('raspberry/sub/status', b'{"status": "off"}')  # set last will to find out if the program is running
+    client.will_set('Rkl/raspberry/sub/status', b'{"status": "off"}')  # set last will to find out if the program is running
     client.connect(broker_address, broker_port, 60)
     # start the loop
     client.loop_start()
