@@ -64,11 +64,6 @@ def publish(plc_address, plc_port):
             client.on_connect = on_connect
             client.will_set("Rkl/testbench_pub/status", b'{"status": "off"}', retain=True)  # Set will to find the status of publisher
             client.connect(broker_address, broker_port, 60)
-            # receive order from MQTT broker
-            client.subscribe("Rkl/WtrSup/zone11/eCtrlMode_10XX")
-            client.subscribe("Rkl/WtrSup/zone11/eCtrlMode_11XX")
-            client.subscribe("Rkl/WtrSup/zone11/eCtrlMode_12XA")
-            
             # read data from plc via. pyads, publish to the MQTT broker
             # IR-Sensor calibration test
             fPT1 = str(plc.read_by_name("PRG_WtrSupCC_Zone11.fCalibPT1", pyads.PLCTYPE_REAL))

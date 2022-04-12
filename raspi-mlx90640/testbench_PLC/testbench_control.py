@@ -16,10 +16,10 @@ pri_fMixingValveOpenSetMan_dic = {"CW": Queue(), "HW": Queue()}
 pri_fPumpPowerSetMan_dic = {"CW": Queue(), "HW": Queue()}
 
 # sec. side
-sec_eCtrlMode_dic = {"CW": Queue(), "HW": Queue()}
-sec_fCircSupTempSet_dic = {"CW": Queue(), "HW": Queue()}
-sec_fValveOpenSetMan_dic = {"CW": Queue(), "HW": Queue()}
-sec_fPumpPowerSetMan_dic = {"CW": Queue(), "HW": Queue()}
+sec_z11_eCtrlMode_dic = {"CW": Queue(), "HW": Queue()}
+sec_z11_fCircSupTempSet_dic = {"CW": Queue(), "HW": Queue()}
+sec_z11_fValveOpenSetMan_dic = {"CW": Queue(), "HW": Queue()}
+sec_z11_fPumpPowerSetMan_dic = {"CW": Queue(), "HW": Queue()}
 
 # wall
 wall_eCtrlMode_dic = {"Wall_10XX": Queue(), "Wall_11XX": Queue(), "Wall_12XA": Queue()}
@@ -110,22 +110,22 @@ def on_message(client, userdata, msg):
     # sec. side
     # cold water
     elif topic == "Rkl/WtrSup/zone11/sec_cw/eCtrlMode":
-        sec_eCtrlMode_dic["CW"].put(int(payload))
+        sec_z11_eCtrlMode_dic["CW"].put(int(payload))
     elif topic == "Rkl/WtrSup/zone11/sec_cw/fCircSupTempSet":
-        sec_fCircSupTempSet_dic["CW"].put(float(payload))
+        sec_z11_fCircSupTempSet_dic["CW"].put(float(payload))
     elif topic == "Rkl/WtrSup/zone11/sec_cw/fValveOpenSetMan":
-        sec_fValveOpenSetMan_dic["CW"].put(float(payload))
+        sec_z11_fValveOpenSetMan_dic["CW"].put(float(payload))
     elif topic == "Rkl/WtrSup/zone11/sec_cw/fPumpPowerSetMan":
-        sec_fPumpPowerSetMan_dic["CW"].put(float(payload))
+        sec_z11_fPumpPowerSetMan_dic["CW"].put(float(payload))
     # hot water
     elif topic == "Rkl/WtrSup/zone11/sec_hw/eCtrlMode":
-        sec_eCtrlMode_dic["CW"].put(int(payload))
+        sec_z11_eCtrlMode_dic["CW"].put(int(payload))
     elif topic == "Rkl/WtrSup/zone11/sec_hw/fCircSupTempSet":
-        sec_fCircSupTempSet_dic["CW"].put(float(payload))
+        sec_z11_fCircSupTempSet_dic["CW"].put(float(payload))
     elif topic == "Rkl/WtrSup/zone11/sec_hw/fValveOpenSetMan":
-        sec_fValveOpenSetMan_dic["CW"].put(float(payload))
+        sec_z11_fValveOpenSetMan_dic["CW"].put(float(payload))
     elif topic == "Rkl/WtrSup/zone11/sec_hw/fPumpPowerSetMan":
-        sec_fPumpPowerSetMan_dic["CW"].put(float(payload))
+        sec_z11_fPumpPowerSetMan_dic["CW"].put(float(payload))
     # wall
     elif topic == "Rkl/WtrSup/zone11/wall_10XX/eCtrlMode":
         wall_eCtrlMode_dic["Wall_10XX"].put(int(payload))

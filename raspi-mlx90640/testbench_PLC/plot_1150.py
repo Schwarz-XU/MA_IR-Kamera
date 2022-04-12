@@ -24,7 +24,7 @@ time = []
 time_gap = 10
 
 now = str(datetime.now().strftime("%m%d_%H%M"))
-file_name = "../Data/0224_1321_surf_temp_1150.csv"
+file_name = "../Data/0405_2205_surf_temp_1150.csv"
 with open(file_name, 'r') as csvfile:
     plots = csv.reader(csvfile, delimiter=',')
     for row in plots:
@@ -68,6 +68,7 @@ ax.xaxis.set_major_locator(x_major_locator)
 plt.legend(loc='upper right')
 plt.ylabel('temperature')
 #plt.ylim((34, 38))
+plt.ylim((38, 42))
 plt.title('1150_7xx', loc="right")
 
 plt.subplot(4, 1, 2)
@@ -82,7 +83,7 @@ ax = plt.gca()
 ax.xaxis.set_major_locator(x_major_locator)
 plt.legend(loc='upper right')
 plt.ylabel('temperature')
-#plt.ylim((34, 38))
+plt.ylim((38, 42))
 plt.title('1150_9xx', loc="right")
 
 plt.subplot(4, 1, 3)
@@ -97,6 +98,7 @@ ax = plt.gca()
 ax.xaxis.set_major_locator(x_major_locator)
 plt.legend(loc='upper right')
 plt.ylabel('temperature')
+plt.ylim((38, 42))
 #plt.ylim((34, 38))
 plt.title('1150_11xx', loc="right")
 
@@ -111,7 +113,7 @@ ax.xaxis.set_major_locator(x_major_locator)
 plt.legend(loc='upper right')
 plt.xlabel('timestamp')
 plt.ylabel('temperature')
-plt.ylim((19, 21))
+plt.ylim((38, 42))
 plt.title('1150_t_arv', loc="right")
 
 plt.suptitle(file_name)

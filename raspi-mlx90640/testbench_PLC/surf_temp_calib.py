@@ -33,12 +33,13 @@ if __name__ == '__main__':
                     temp_1124 = temperature_array[11][24]
                     temp_11_arv = np.average([temp_1115, temp_1118, temp_1121, temp_1124])
                     temp_1150_arv = np.average([temp_7_arv, temp_9_arv, temp_11_arv])
-                    temp_1150_arv_10 = value_moving_avg(temp_1150_arv, 10, 0.4).mov_avg()
+                    temp_1150_arv_10 = value_moving_avg(temp_1150_arv, 10, 0.4).calculate()
                     data_list = [i, temp_715, temp_718, temp_721, temp_724, temp_915, temp_918, temp_921,
                                  temp_924, temp_1115, temp_1118, temp_1121, temp_1124, temp_7_arv, temp_9_arv,
                                  temp_11_arv, temp_1150_arv_10]
                     i += 1
                     print(data_list)
+                    print(temp_1150_arv_10)
                     writer = csv.writer(file)
                     writer.writerow(data_list)
                 time.sleep(1)

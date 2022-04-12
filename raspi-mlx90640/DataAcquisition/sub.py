@@ -14,9 +14,12 @@ def on_connect(client, userdata, flags, rc):
         print(f"Connected fail with code {rc}")
     # print(f"Connected with result code {rc}")
     client.subscribe("Rkl/raspberry/temperature_array")  # sub the topic
+    # client.subscribe("Rkl/WtrSup/zone11/test/pt1")
+    # client.subscribe("Rkl/WtrSup/zone11/test/pt2")
+    # client.subscribe("Rkl/WtrSup/zone11/panel_8/fSupTempAct")
 
 
-payload = bytes()  # initial the payload var. as a empty bytes var.
+payload = bytes()  # initial the payload var. as an empty byte var.
 temperature_array = np.array([])
 temperature_list_str = [""]
 

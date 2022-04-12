@@ -50,12 +50,15 @@ class MainWindow(QtWidgets.QMainWindow):
         # click button action
         self.ui.bt_write_frontwall.clicked.connect(self.set_supply_temp_frontwall)
         self.ui.bt_write_frontwall.clicked.connect(self.set_control_mode_frontwall)
+        self.ui.bt_write_frontwall.clicked.connect(self.set_panel_control_frontwall)
 
         self.ui.bt_write_sidewall.clicked.connect(self.set_supply_temp_sidewall)
         self.ui.bt_write_sidewall.clicked.connect(self.set_control_mode_sidewall)
+        self.ui.bt_write_sidewall.clicked.connect(self.set_panel_control_sidewall)
 
         self.ui.bt_write_floor.clicked.connect(self.set_supply_temp_floor)
         self.ui.bt_write_floor.clicked.connect(self.set_control_mode_floor)
+        self.ui.bt_write_floor.clicked.connect(self.set_panel_control_floor)
         # combobox action
         self.ui.CM_10X1.activated.connect(self.wall_control)
         self.ui.CM_11XX.activated.connect(self.wall_control)
@@ -145,6 +148,55 @@ class MainWindow(QtWidgets.QMainWindow):
         client.publish("Rkl/WtrSup/zone11/panel_2/eCtrlMode", control_mode_10L2, qos=0, retain=False)
         client.publish("Rkl/WtrSup/zone11/panel_3/eCtrlMode", control_mode_10L3, qos=0, retain=False)
 
+    def set_panel_control_floor(self):
+        panel_control_10L1 = self.ui.Ctrl_10L1.currentIndex()
+        panel_control_10S123 = self.ui.Ctrl_10S123.currentIndex()
+        panel_control_10L2 = self.ui.Ctrl_10L2.currentIndex()
+        panel_control_10L3 = self.ui.Ctrl_10L3.currentIndex()
+
+        client.publish("Rkl/WtrSup/zone11/panel_0/ePanelCtrl", panel_control_10L1, qos=0, retain=False)
+        client.publish("Rkl/WtrSup/zone11/panel_1/ePanelCtrl", panel_control_10S123, qos=0, retain=False)
+        client.publish("Rkl/WtrSup/zone11/panel_2/ePanelCtrl", panel_control_10L2, qos=0, retain=False)
+        client.publish("Rkl/WtrSup/zone11/panel_3/ePanelCtrl", panel_control_10L3, qos=0, retain=False)
+
+    def set_panel_control_frontwall(self):
+        panel_control_1110 = self.ui.Ctrl_1110.currentIndex()
+        panel_control_1120 = self.ui.Ctrl_1120.currentIndex()
+        panel_control_1130 = self.ui.Ctrl_1130.currentIndex()
+        panel_control_1140 = self.ui.Ctrl_1140.currentIndex()
+        panel_control_1150 = self.ui.Ctrl_1150.currentIndex()
+        panel_control_1160 = self.ui.Ctrl_1160.currentIndex()
+
+        client.publish("Rkl/WtrSup/zone11/panel_4/ePanelCtrl", panel_control_1110, qos=0, retain=False)
+        client.publish("Rkl/WtrSup/zone11/panel_5/ePanelCtrl", panel_control_1120, qos=0, retain=False)
+        client.publish("Rkl/WtrSup/zone11/panel_6/ePanelCtrl", panel_control_1130, qos=0, retain=False)
+        client.publish("Rkl/WtrSup/zone11/panel_7/ePanelCtrl", panel_control_1140, qos=0, retain=False)
+        client.publish("Rkl/WtrSup/zone11/panel_8/ePanelCtrl", panel_control_1150, qos=0, retain=False)
+        client.publish("Rkl/WtrSup/zone11/panel_9/ePanelCtrl", panel_control_1160, qos=0, retain=False)
+
+    def set_panel_control_sidewall(self):
+        panel_control_121A = self.ui.Ctrl_121A.currentIndex()
+        panel_control_122A = self.ui.Ctrl_122A.currentIndex()
+        panel_control_123A = self.ui.Ctrl_123A.currentIndex()
+        panel_control_124A = self.ui.Ctrl_124A.currentIndex()
+        panel_control_125A = self.ui.Ctrl_125A.currentIndex()
+
+        client.publish("Rkl/WtrSup/zone11/panel_10/ePanelCtrl", panel_control_121A, qos=0, retain=False)
+        client.publish("Rkl/WtrSup/zone11/panel_11/ePanelCtrl", panel_control_122A, qos=0, retain=False)
+        client.publish("Rkl/WtrSup/zone11/panel_12/ePanelCtrl", panel_control_123A, qos=0, retain=False)
+        client.publish("Rkl/WtrSup/zone11/panel_13/ePanelCtrl", panel_control_124A, qos=0, retain=False)
+        client.publish("Rkl/WtrSup/zone11/panel_14/ePanelCtrl", panel_control_125A, qos=0, retain=False)
+
+    def set_supply_temp_floor(self):
+        supply_temp_set_10L1 = self.ui.STset_10L1.value()
+        supply_temp_set_10S123 = self.ui.STset_10S123.value()
+        supply_temp_set_10L2 = self.ui.STset_10L2.value()
+        supply_temp_set_10L3 = self.ui.STset_10L3.value()
+        client.publish("Rkl/WtrSup/zone11/panel_0/fSupTempSet", supply_temp_set_10L1, qos=0, retain=False)
+        client.publish("Rkl/WtrSup/zone11/panel_1/fSupTempSet", supply_temp_set_10S123, qos=0, retain=False)
+        client.publish("Rkl/WtrSup/zone11/panel_2/fSupTempSet", supply_temp_set_10L2, qos=0, retain=False)
+        client.publish("Rkl/WtrSup/zone11/panel_3/fSupTempSet", supply_temp_set_10L3, qos=0, retain=False)
+
     def set_supply_temp_frontwall(self):
         supply_temp_set_1110 = self.ui.STset_1110.value()
         supply_temp_set_1120 = self.ui.STset_1120.value()
@@ -170,16 +222,6 @@ class MainWindow(QtWidgets.QMainWindow):
         client.publish("Rkl/WtrSup/zone11/panel_12/fSupTempSet", supply_temp_set_123A, qos=0, retain=False)
         client.publish("Rkl/WtrSup/zone11/panel_13/fSupTempSet", supply_temp_set_124A, qos=0, retain=False)
         client.publish("Rkl/WtrSup/zone11/panel_14/fSupTempSet", supply_temp_set_125A, qos=0, retain=False)
-
-    def set_supply_temp_floor(self):
-        supply_temp_set_10L1 = self.ui.STset_10L1.value()
-        supply_temp_set_10S123 = self.ui.STset_10S123.value()
-        supply_temp_set_10L2 = self.ui.STset_10L2.value()
-        supply_temp_set_10L3 = self.ui.STset_10L3.value()
-        client.publish("Rkl/WtrSup/zone11/panel_0/fSupTempSet", supply_temp_set_10L1, qos=0, retain=False)
-        client.publish("Rkl/WtrSup/zone11/panel_1/fSupTempSet", supply_temp_set_10S123, qos=0, retain=False)
-        client.publish("Rkl/WtrSup/zone11/panel_2/fSupTempSet", supply_temp_set_10L2, qos=0, retain=False)
-        client.publish("Rkl/WtrSup/zone11/panel_3/fSupTempSet", supply_temp_set_10L3, qos=0, retain=False)
 
 
 def run():
