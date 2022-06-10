@@ -50,15 +50,15 @@ class MainWindow(QtWidgets.QMainWindow):
         # click button action
         self.ui.bt_write_frontwall.clicked.connect(self.set_supply_temp_frontwall)
         self.ui.bt_write_frontwall.clicked.connect(self.set_control_mode_frontwall)
-        self.ui.bt_write_frontwall.clicked.connect(self.set_panel_control_frontwall)
+        #self.ui.bt_write_frontwall.clicked.connect(self.set_panel_control_frontwall)
 
         self.ui.bt_write_sidewall.clicked.connect(self.set_supply_temp_sidewall)
         self.ui.bt_write_sidewall.clicked.connect(self.set_control_mode_sidewall)
-        self.ui.bt_write_sidewall.clicked.connect(self.set_panel_control_sidewall)
+        #self.ui.bt_write_sidewall.clicked.connect(self.set_panel_control_sidewall)
 
         self.ui.bt_write_floor.clicked.connect(self.set_supply_temp_floor)
         self.ui.bt_write_floor.clicked.connect(self.set_control_mode_floor)
-        self.ui.bt_write_floor.clicked.connect(self.set_panel_control_floor)
+        #self.ui.bt_write_floor.clicked.connect(self.set_panel_control_floor)
         # combobox action
         self.ui.CM_10X1.activated.connect(self.wall_control)
         self.ui.CM_11XX.activated.connect(self.wall_control)
@@ -147,7 +147,7 @@ class MainWindow(QtWidgets.QMainWindow):
         client.publish("Rkl/WtrSup/zone11/panel_1/eCtrlMode", control_mode_10S123, qos=0, retain=False)
         client.publish("Rkl/WtrSup/zone11/panel_2/eCtrlMode", control_mode_10L2, qos=0, retain=False)
         client.publish("Rkl/WtrSup/zone11/panel_3/eCtrlMode", control_mode_10L3, qos=0, retain=False)
-
+    '''
     def set_panel_control_floor(self):
         panel_control_10L1 = self.ui.Ctrl_10L1.currentIndex()
         panel_control_10S123 = self.ui.Ctrl_10S123.currentIndex()
@@ -186,7 +186,7 @@ class MainWindow(QtWidgets.QMainWindow):
         client.publish("Rkl/WtrSup/zone11/panel_12/ePanelCtrl", panel_control_123A, qos=0, retain=False)
         client.publish("Rkl/WtrSup/zone11/panel_13/ePanelCtrl", panel_control_124A, qos=0, retain=False)
         client.publish("Rkl/WtrSup/zone11/panel_14/ePanelCtrl", panel_control_125A, qos=0, retain=False)
-
+    '''
     def set_supply_temp_floor(self):
         supply_temp_set_10L1 = self.ui.STset_10L1.value()
         supply_temp_set_10S123 = self.ui.STset_10S123.value()

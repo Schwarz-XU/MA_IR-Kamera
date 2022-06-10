@@ -2,6 +2,8 @@
 import paho.mqtt.client as mqtt
 import pyads
 from queue import Queue
+from DataAcquisition import sub
+import time
 
 plc_address = "5.78.127.222.1.1"
 plc_port = 851
@@ -60,17 +62,36 @@ def plc_connect(address, port):
 
 
 def publish(p_add, p_port, b_add, b_port):
-    plc = plc_connect(p_add, p_port)
+    # plc = plc_connect(p_add, p_port)
     while True:
         try:
-            # establish connection
-            client = mqtt.Client()
-            client.on_connect = on_connect
-            client.will_set("Rkl/testbench_pub/status", b'{"status": "off"}',
-                            retain=True)  # Set will to find the status of publisher
-            client.connect(b_add, b_port, 60)
+            sub.run()
+
+            temperature_array = sub.temperature_array
+            if temperature_array.size != 0:
+                test_dic = {"test1": Queue(), "test2": Queue(), "test3": Queue(), "test4": Queue(), "test0": Queue()}
+                test1 = temperature_array[1][2]
+                test2 = temperature_array[2][3]
+                test3 = temperature_array[3][4]
+                test4 = temperature_array[4][5]
+                test0 = temperature_array[5][6]
+                test_list = [test1, test2, test3, test4, test0]
+                time.sleep(0.5)
+                print(test_list)
+                # establish connection
+                client = mqtt.Client()
+                client.on_connect = on_connect
+                client.will_set("Rkl/testbench_pub/status", b'{"status": "off"}',
+                                retain=True)  # Set will to find the status of publisher
+                client.connect(b_add, b_port, 60)
+                for i in range(5):
+                    test_dic["test"+str(i)].put(test_list[i])
+                    print(test_dic["test"+str(i)].empty())
+                    client.publish(f"Rkl/test/test_{i}", payload=test_dic["test"+str(i)].get())
+
             # read data from plc via. pyads, publish to MQTT broker
             # IR-Sensor calibration test
+            '''
             fPT_dic["fPT1"].put(str(plc.read_by_name("PRG_WtrSupCC_Zone11.fCalibPT1", pyads.PLCTYPE_REAL)))
             fPT_dic["fPT2"].put(str(plc.read_by_name("PRG_WtrSupCC_Zone11.fCalibPT2", pyads.PLCTYPE_REAL)))
             client.publish('Rkl/WtrSup/zone11/test/pt1', payload=fPT_dic["fPT1"].get(), qos=0, retain=False)
@@ -186,6 +207,7 @@ def publish(p_add, p_port, b_add, b_port):
                                payload=panel_bCWSupReq_dic[f"bCWSupReq_{i}"].get(), qos=0, retain=False)
                 client.publish('Rkl/WtrSup/zone11/panel_{nPanelIndex}/bHWSupReq'.format(nPanelIndex=i),
                                payload=panel_bHWSupReq_dic[f"bHWSupReq_{i}"].get(), qos=0, retain=False)
+            '''
         except Exception as e:
             print(repr(e))
 
