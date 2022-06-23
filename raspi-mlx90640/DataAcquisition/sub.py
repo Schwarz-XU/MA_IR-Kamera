@@ -1,6 +1,7 @@
 # sub.py
 import paho.mqtt.client as mqtt
 import numpy as np
+import time
 
 # broker_address = "mqtt.eclipseprojects.io"
 # broker_address = "broker.emqx.io"
@@ -16,7 +17,7 @@ def on_connect(client, userdata, flags, rc):
     # print(f"Connected with result code {rc}")
     topic = [("Rkl/raspberry/temperature_array", 2), ("Rkl/WtrSup/zone11/test/pt1", 0), ("Rkl/WtrSup/zone11/test/pt2", 0),
              ("Rkl/WtrSup/zone11/test/pt3", 0), ("Rkl/WtrSup/zone11/test/pt4", 0), ("Rkl/WtrSup/zone11/test/pt5", 0),
-             ("Rkl/WtrSup/zone11/Tvl8", 0)]
+             ("Rkl/WtrSup/zone11/Tvl8", 0), ("Rkl/raspberry/t_sensor", 0)]
              #("Rkl/WtrSup/zone11/PanelData")]
 
     client.subscribe(topic)
@@ -24,7 +25,7 @@ def on_connect(client, userdata, flags, rc):
 payload = bytes()  # initial the payload var. as an empty byte var.
 temperature_array = np.array([])
 temperature_list_str = [""]
-pt1, pt2, pt3, pt4, pt5, Tvl8 = float(), float(), float(), float(), float(), float()
+pt1, pt2, pt3, pt4, pt5, t_sensor, Tvl8 = float(), float(), float(), float(), float(), float(), float()
 
 
 def on_message(client, userdata, msg):
@@ -32,7 +33,7 @@ def on_message(client, userdata, msg):
     global payload
     global temperature_array
     global temperature_list_str
-    global pt1, pt2, pt3, pt4, pt5, Tvl8
+    global pt1, pt2, pt3, pt4, pt5, t_sensor, Tvl8
     #global panel_data
 
     payload = msg.payload
@@ -60,6 +61,8 @@ def on_message(client, userdata, msg):
             pt4 = float(payload)
         if topic == "Rkl/WtrSup/zone11/test/pt5":
             pt5 = float(payload)
+        if topic == "Rkl/raspberry/t_sensor":
+            t_sensor = float(payload)
         if topic == "Rkl/WtrSup/zone11/Tvl8":
             Tvl8 = float(payload)
         # if topic == "RKl/WtrSup/zone11/PanelData":
@@ -73,7 +76,7 @@ def run():
     client.on_connect = on_connect
     client.on_message = on_message
     client.will_set('Rkl/raspberry/sub/status', b'{"status": "off"}')  # set last will to find out if the program is running
-    client.connect(broker_address, broker_port, 60)
+    client.connect_async(broker_address, broker_port, 60)
     # start the loop
     client.loop_start()
     # client.loop_forever()

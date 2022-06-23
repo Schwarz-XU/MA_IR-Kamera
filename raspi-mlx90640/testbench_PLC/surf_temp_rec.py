@@ -4,6 +4,7 @@ from datetime import datetime
 import numpy as np
 import csv
 import time
+from datetime import datetime
 
 
 now = str(datetime.now().strftime("%m%d_%H%M"))
@@ -41,16 +42,17 @@ def run():
                     temp_avg_2 = np.average([temp_613, temp_614])
                     wand_temp_mov_avg = value_moving_avg(temp_avg_2, 10, 0.4).calculate()
                     print(wand_temp_mov_avg)
+                    ts = datetime.timestamp(datetime.now())
 
-                    data_list = [i, temp_1217, temp_1216, temp_1117, temp_1116, band_temp_mov_avg,
+                    data_list = [i, ts, temp_1217, temp_1216, temp_1117, temp_1116, band_temp_mov_avg,
                                  temp_613, temp_614, wand_temp_mov_avg,
                                  pt1, pt2, pt3, pt4, pt5, Tvl8]
                     i += 1
                     print(data_list)
                     writer = csv.writer(file)
                     writer.writerow(data_list)
-                time.sleep(0.2)
-                if i == 3600 * 8:
+                    time.sleep(0.2)
+                if i == 3600 * 1:
                     now2 = datetime.now()
                     time_gap = now2 - now1
                     print(f"finish after {time_gap/60} min")
