@@ -1,4 +1,6 @@
 # auto_data_acq.py
+import sys, os
+sys.path.append(os.path.abspath("../"))
 from testbench_PLC import surf_temp_calib
 import paho.mqtt.client as mqtt
 import time
